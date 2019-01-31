@@ -101,7 +101,7 @@ public class CreateDeleteChartTest {
 
         WebElement mainPage = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));
         WebElement libraryButton = driver.findElement(By.xpath("/html/body/app-root/div/div[1]/div[2]"
-                +"/div/div[1]/div[4]/span"));
+                +"/div/div[1]/div[5]/span"));
 
         WebElement chartsButton = null;
 
