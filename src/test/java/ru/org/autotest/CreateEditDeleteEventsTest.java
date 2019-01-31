@@ -1,8 +1,8 @@
 package ru.org.autotest;
 
-import java.util.Date;
+import java.io.File;
+import java.util.*;
 import org.junit.AfterClass;
-import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -11,8 +11,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import java.util.List;
-import java.util.Vector;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class CreateEditDeleteEventsTest {
@@ -22,8 +21,9 @@ public class CreateEditDeleteEventsTest {
     final private long delayMilliSec = 200;
     final private long delaySec = 1;
     enum TypeEvent {UNDEFINED, CALENDAR, EXTERNAL}
+    private static ArrayList<String> auth = new ArrayList<>();
 
-    private void mSleep (long sec) {
+    private static void mSleep (long sec) {
         try {
             TimeUnit.SECONDS.sleep(sec);
         }
@@ -32,7 +32,7 @@ public class CreateEditDeleteEventsTest {
         }
     }
 
-    private void milliSleep (long msec) {
+    private static void milliSleep (long msec) {
         try {
             TimeUnit.MILLISECONDS.sleep(msec);
         }
@@ -48,7 +48,22 @@ public class CreateEditDeleteEventsTest {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.get("http://192.168.1.84/");
+
+        try {
+            Scanner sc = new Scanner(new File("/home/azotov/IdeaProjects/t.txt"));
+            String strLine;
+            int s = 0;
+            while(sc.hasNext()) {
+                strLine = sc.nextLine();
+                auth.add(s, strLine);
+                s++;
+            }
+        }
+        catch (Exception e) {
+            System.out.println("Error! File not found");
+        }
+
+        driver.get(auth.get(0));
     }
 
     @Test
@@ -59,10 +74,8 @@ public class CreateEditDeleteEventsTest {
 
         Date currentTime = new Date();
         String cTime = currentTime.toString();
-        String login = new String();
-        String password = new String();
-        login = "mao@mao.mao";
-        password = "123";
+        String login = auth.get(1);
+        String password = auth.get(2);
 
         //================================== AUTHORISATION ====================================================
 

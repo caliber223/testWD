@@ -1,7 +1,7 @@
 package ru.org.autotest;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+import java.io.File;
+import java.util.*;
 import java.util.Date;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -14,12 +14,34 @@ import org.openqa.selenium.support.ui.Select;
 
 import java.util.List;
 import java.util.Vector;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class CreateDeleteChartTest {
 
     private static WebDriver driver;
     private static Vector<String> newChartNameList = new Vector();
+    final private long delayMilliSec = 200;
+    final private long delaySec = 1;
+    private static ArrayList<String> auth = new ArrayList<>();
+
+    private static void mSleep (long sec) {
+        try {
+            TimeUnit.SECONDS.sleep(sec);
+        }
+        catch(Exception e) {
+            System.out.println("Exception!");
+        }
+    }
+
+    private static void milliSleep (long msec) {
+        try {
+            TimeUnit.MILLISECONDS.sleep(msec);
+        }
+        catch(Exception e) {
+            System.out.println("Exception!");
+        }
+    }
 
     @BeforeClass
     public static void setup() {
@@ -27,7 +49,22 @@ public class CreateDeleteChartTest {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.get("http://192.168.1.84/");
+
+        try {
+            Scanner sc = new Scanner(new File("/home/azotov/IdeaProjects/t.txt"));
+            String strLine;
+            int s = 0;
+            while(sc.hasNext()) {
+                strLine = sc.nextLine();
+                auth.add(s, strLine);
+                s++;
+            }
+        }
+        catch (Exception e) {
+            System.out.println("Error! File not found");
+        }
+
+        driver.get(auth.get(0));
     }
 
     @Test
@@ -37,10 +74,8 @@ public class CreateDeleteChartTest {
 
         Date currentTime = new Date();
         String cTime = currentTime.toString();
-        String login = new String();
-        String password = new String();
-        login = "mao@mao.mao";
-        password = "123";
+        String login = auth.get(1);
+        String password = auth.get(2);
 
         //================================== CREATE CHART ====================================================
 
@@ -62,6 +97,7 @@ public class CreateDeleteChartTest {
                 +"/div/ng-component/div/div/form/div[3]/div/button"));
         loginButton.click();
         System.out.println("___________________ loginButton - OK");
+        milliSleep(delayMilliSec);
 
         WebElement mainPage = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));
         WebElement libraryButton = driver.findElement(By.xpath("/html/body/app-root/div/div[1]/div[2]"
@@ -202,6 +238,7 @@ public class CreateDeleteChartTest {
 
         }
 
+        mSleep(delaySec);
         System.out.println("============================ DELETE CHARTS ==========================");
         //================================== DELETE CREATED CHARTS =========================================
         if(newChartNameList.size() > 0) {

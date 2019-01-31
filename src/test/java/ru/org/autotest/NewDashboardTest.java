@@ -10,9 +10,34 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
+import java.io.File;
+import java.util.*;
+import java.util.ArrayList;
+
 
 public class NewDashboardTest {
     private static WebDriver driver;
+    final private long delayMilliSec = 200;
+    final private long delaySec = 1;
+    private static ArrayList<String> auth = new ArrayList<>();
+
+    private static void mSleep (long sec) {
+        try {
+            TimeUnit.SECONDS.sleep(sec);
+        }
+        catch(Exception e) {
+            System.out.println("Exception!");
+        }
+    }
+
+    private static void milliSleep (long msec) {
+        try {
+            TimeUnit.MILLISECONDS.sleep(msec);
+        }
+        catch(Exception e) {
+            System.out.println("Exception!");
+        }
+    }
 
     @BeforeClass
     public static void setup() {
@@ -20,17 +45,30 @@ public class NewDashboardTest {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.get("http://192.168.1.84/");
+
+        try {
+            Scanner sc = new Scanner(new File("/home/azotov/IdeaProjects/t.txt"));
+            String strLine;
+            int s = 0;
+            while(sc.hasNext()) {
+                strLine = sc.nextLine();
+                auth.add(s, strLine);
+                s++;
+            }
+        }
+        catch (Exception e) {
+            System.out.println("Error! File not found");
+        }
+
+        driver.get(auth.get(0));
     }
 
     @Test
     public void changeDashboard() {
         Date currentTime = new Date();
         String cTime = currentTime.toString();
-        String login = new String();
-        String password = new String();
-        login = "mao@mao.mao";
-        password = "123";
+        String login = auth.get(1);
+        String password = auth.get(2);
 
         WebElement loginField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
                                                            +"/div/ng-component/div/div/form/div[1]/div/input"));
@@ -64,6 +102,7 @@ public class NewDashboardTest {
                                                                   +"/ng-component/div/div/button"));
         addGroupButton.click();
         System.out.println("___________________ addGroupButton - OK");
+        milliSleep(delayMilliSec);
 
         WebElement groupNameField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
                                                                 +"/ng-component/div/div/div[2]/div[2]/input[1]"));
@@ -87,12 +126,7 @@ public class NewDashboardTest {
 
     @AfterClass
     public static void tearDown() {
-        try {
-            TimeUnit.SECONDS.sleep(5);
-        }
-        catch(Exception e) {
-            System.out.println("Exception!");
-        }
+        mSleep(2);
         WebElement logoutButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]"
                                                                +"/div/div[5]/div[3]/span"));
         logoutButton.click();

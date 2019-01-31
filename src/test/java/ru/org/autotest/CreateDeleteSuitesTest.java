@@ -1,6 +1,8 @@
 package ru.org.autotest;
 
 import java.util.Date;
+import java.io.File;
+import java.util.*;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -12,12 +14,34 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.util.Vector;
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class CreateDeleteSuitesTest {
 
     private static WebDriver driver;
     private static Vector<String> suiteNameList = new Vector();
+    final private long delayMilliSec = 200;
+    final private long delaySec = 1;
+    private static ArrayList<String> auth = new ArrayList<>();
+
+    private static void mSleep (long sec) {
+        try {
+            TimeUnit.SECONDS.sleep(sec);
+        }
+        catch(Exception e) {
+            System.out.println("Exception!");
+        }
+    }
+
+    private static void milliSleep (long msec) {
+        try {
+            TimeUnit.MILLISECONDS.sleep(msec);
+        }
+        catch(Exception e) {
+            System.out.println("Exception!");
+        }
+    }
 
     @BeforeClass
     public static void setup() {
@@ -25,7 +49,22 @@ public class CreateDeleteSuitesTest {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.get("http://192.168.1.84/");
+
+        try {
+            Scanner sc = new Scanner(new File("/home/azotov/IdeaProjects/t.txt"));
+            String strLine;
+            int s = 0;
+            while(sc.hasNext()) {
+                strLine = sc.nextLine();
+                auth.add(s, strLine);
+                s++;
+            }
+        }
+        catch (Exception e) {
+            System.out.println("Error! File not found");
+        }
+
+        driver.get(auth.get(0));
     }
 
     @Test
@@ -35,10 +74,8 @@ public class CreateDeleteSuitesTest {
 
         Date currentTime = new Date();
         String cTime = currentTime.toString();
-        String login = new String();
-        String password = new String();
-        login = "mao@mao.mao";
-        password = "123";
+        String login = auth.get(1);
+        String password = auth.get(2);
 
         //================================== CREATE SUITE ====================================================
 
@@ -59,6 +96,7 @@ public class CreateDeleteSuitesTest {
         WebElement loginButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
                                                             +"/div/ng-component/div/div/form/div[3]/div/button"));
         loginButton.click();
+        milliSleep(delayMilliSec);
         System.out.println("___________________ loginButton - OK");
 
         WebElement mainPage = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));
@@ -215,12 +253,7 @@ public class CreateDeleteSuitesTest {
 
             suiteNameList.add(nameSuite);
 
-            try {
-                TimeUnit.SECONDS.sleep(3);
-            }
-            catch(Exception e) {
-                System.out.println("Exception!");
-            }
+            mSleep(2);
         }
 
         System.out.println("============================ DELETE SUITES ==========================");
