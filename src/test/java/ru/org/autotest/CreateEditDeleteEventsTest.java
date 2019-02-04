@@ -102,7 +102,7 @@ public class CreateEditDeleteEventsTest {
 
         WebElement mainPage = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));
         WebElement libraryButton = driver.findElement(By.xpath("/html/body/app-root/div/div[1]/div[2]"
-                +"/div/div[1]/div[5]/span"));
+                +"/div[1]/div[1]/div[5]/span"));
         WebElement eventsButton = null;
 
         for(int n = 0; n < numberEvents; n++) {
@@ -134,6 +134,80 @@ public class CreateEditDeleteEventsTest {
             }
             System.out.println("___________________ nameEvent - OK");
 
+            WebElement alwaysActiveButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                    +"ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/"
+                    +"div/div/div[2]/div[1]/md-checkbox/div[1]"));
+            alwaysActiveButton.click();
+            milliSleep(delayMilliSec);
+
+            WebElement startButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                    +"ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[2]/div[2]"
+                    +"/div[1]/div/md-checkbox/div[1]"));
+            startButton.click();
+            milliSleep(delayMilliSec);
+
+            WebElement startField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                    +"ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[2]/"
+                    +"div[2]/div[1]/div/input"));
+            startField.click();
+
+            WebElement monthButton = driver.findElement(By.xpath("/html/body/bs-datepicker-container/div/div/"
+                    +"div/div/bs-days-calendar-view/bs-calendar-layout/div[1]/"
+                    +"bs-datepicker-navigation-view/button[2]/span"));
+            monthButton.click();
+
+            WebElement monthSelectJune = driver.findElement(By.xpath("/html/body/bs-datepicker-container/div/div/div/"
+                    +"div/bs-month-calendar-view/bs-calendar-layout/div[2]/table/tbody/tr[2]/td[3]/span"));
+            monthSelectJune.click();
+
+            WebElement daySelect10 = driver.findElement(By.xpath("/html/body/bs-datepicker-container/div/div/div/"
+                    +"div/bs-days-calendar-view/bs-calendar-layout/div[2]/table/tbody/tr[3]/td[3]/span"));
+            daySelect10.click();
+
+            WebElement hourField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                    +"ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[2]/"
+                    +"div[2]/div[1]/div/timepicker/table/tbody/tr[2]/td[1]/input"));
+            hourField.sendKeys("06");
+
+            WebElement minuteField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                    +"ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[2]/"
+                    +"div[2]/div[1]/div/timepicker/table/tbody/tr[2]/td[3]/input"));
+            minuteField.sendKeys("25");
+            milliSleep(delayMilliSec);
+
+            WebElement endButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/"
+                    +"div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[2]/div[2]/div[2]/"
+                    +"div/md-checkbox/div[1]"));
+            endButton.click();
+
+            WebElement endField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/"
+                    +"div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[2]/"
+                    +"div[2]/div[2]/div/input"));
+            endField.click();
+            System.out.println("___________________ DEBUG step 1");
+            WebElement month2Button = driver.findElement(By.xpath("/html/body/bs-datepicker-container/div/div/div"
+                    +"/div/bs-days-calendar-view/bs-calendar-layout/div[1]/"
+                    +"bs-datepicker-navigation-view/button[2]/span"));
+            month2Button.click();
+            System.out.println("___________________ DEBUG step 2");
+            WebElement month2SelectAugust = driver.findElement(By.xpath("/html/body/bs-datepicker-container/div/div/"
+                    +"div/div/bs-month-calendar-view/bs-calendar-layout/div[2]/table/tbody/tr[3]/td[2]/span"));
+            month2SelectAugust.click();
+            System.out.println("___________________ DEBUG step 3");
+            WebElement day2Select20 = driver.findElement(By.xpath("/html/body/bs-datepicker-container/div/div/div/"
+                    +"div/bs-days-calendar-view/bs-calendar-layout/div[2]/table/tbody/tr[4]/td[5]"));
+            day2Select20.click();
+            System.out.println("___________________ DEBUG step 4");
+            WebElement hour2Field = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/"
+                    +"div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[2]/div[2]/div[2]/"
+                    +"div/timepicker/table/tbody/tr[2]/td[1]/input"));
+            hour2Field.sendKeys("11");
+            System.out.println("___________________ DEBUG step 5");
+            WebElement minute2Field = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                    +"ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[2]/div[2]/"
+                    +"div[2]/div/timepicker/table/tbody/tr[2]/td[3]/input"));
+            minute2Field.sendKeys("15");
+            System.out.println("___________________ DEBUG step 6");
             WebElement saveNewCalendarEventButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
                     +"ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[3]/div/div[1]/button"));
             saveNewCalendarEventButton.click();
