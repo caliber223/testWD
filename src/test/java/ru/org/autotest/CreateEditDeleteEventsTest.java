@@ -184,30 +184,90 @@ public class CreateEditDeleteEventsTest {
                     +"div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[2]/"
                     +"div[2]/div[2]/div/input"));
             endField.click();
-            System.out.println("___________________ DEBUG step 1");
+
             WebElement month2Button = driver.findElement(By.xpath("/html/body/bs-datepicker-container/div/div/div"
                     +"/div/bs-days-calendar-view/bs-calendar-layout/div[1]/"
                     +"bs-datepicker-navigation-view/button[2]/span"));
             month2Button.click();
-            System.out.println("___________________ DEBUG step 2");
+
             WebElement month2SelectAugust = driver.findElement(By.xpath("/html/body/bs-datepicker-container/div/div/"
                     +"div/div/bs-month-calendar-view/bs-calendar-layout/div[2]/table/tbody/tr[3]/td[2]/span"));
             month2SelectAugust.click();
-            System.out.println("___________________ DEBUG step 3");
+
             WebElement day2Select20 = driver.findElement(By.xpath("/html/body/bs-datepicker-container/div/div/div/"
                     +"div/bs-days-calendar-view/bs-calendar-layout/div[2]/table/tbody/tr[4]/td[5]"));
             day2Select20.click();
-            System.out.println("___________________ DEBUG step 4");
+
             WebElement hour2Field = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/"
                     +"div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[2]/div[2]/div[2]/"
                     +"div/timepicker/table/tbody/tr[2]/td[1]/input"));
             hour2Field.sendKeys("11");
-            System.out.println("___________________ DEBUG step 5");
+
             WebElement minute2Field = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
                     +"ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[2]/div[2]/"
                     +"div[2]/div/timepicker/table/tbody/tr[2]/td[3]/input"));
             minute2Field.sendKeys("15");
-            System.out.println("___________________ DEBUG step 6");
+
+
+            WebElement everyHour = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                    +"ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[3]/div/"
+                    +"trigger-edit/div/div[1]/div[2]"));
+            everyHour.click();
+
+            WebElement triggerMinute = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                    +"ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[3]/div/"
+                    +"trigger-edit/div/div[3]/div[1]/input"));
+            triggerMinute.sendKeys("50");   //  50 minutes
+
+            WebElement triggerHour = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/"
+                    +"div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[3]/div/trigger-edit/"
+                    +"div/div[3]/div[2]/table/tbody/tr[2]/td[5]"));
+            triggerHour.click();    // 10 hours
+
+            WebElement triggerDay10 = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                    +"ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[3]/div/"
+                    +"trigger-edit/div/div[3]/div[3]/table/tbody/tr[2]/td[2]"));
+            WebElement triggerDay15 = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                    +"ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[3]/div/"
+                    +"trigger-edit/div/div[3]/div[3]/table/tbody/tr[2]/td[7]"));
+            WebElement triggerDay20 = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                    +"ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[3]/div/"
+                    +"trigger-edit/div/div[3]/div[3]/table/tbody/tr[3]/td[4]"));
+            triggerDay10.click();
+            triggerDay15.click();
+            triggerDay20.click();
+
+            WebElement triggerMonthJune   = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                    +"ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[3]/div/"
+                    +"trigger-edit/div/div[3]/div[4]/table/tbody/tr[2]/td[2]"));
+            WebElement triggerMonthJule   = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                    +"ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[3]/div/"
+                    +"trigger-edit/div/div[3]/div[4]/table/tbody/tr[2]/td[3]"));
+            WebElement triggerMonthAugust = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                    +"ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[3]/div/"
+                    +"trigger-edit/div/div[3]/div[4]/table/tbody/tr[2]/td[4]"));
+            triggerMonthJune.click();
+            triggerMonthJule.click();
+            triggerMonthAugust.click();
+
+            WebElement addAction = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                    +"ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[4]/"
+                    +"label/button"));
+            addAction.click();
+
+            List<WebElement> actionsList = driver.findElements(By.tagName("event-action"));
+            System.out.printf("\n____________________ size of actionsList = %d\n", actionsList.size());
+
+            WebElement selectAction = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                    +"ng-component/div/ng-component/dialog-event/dialog-select-actions/dm-dialog/div/div/div/div[2]"
+                    +"/div/div/div/list-view/event-action[3]/atr-suite/div/md-checkbox/div[1]"));
+            selectAction.click();
+
+            WebElement addActionApply = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                    +"ng-component/div/ng-component/dialog-event/dialog-select-actions/dm-dialog/div/div/div/div[3]/"
+                    +"div/div[1]/button"));
+            addActionApply.click();
+
             WebElement saveNewCalendarEventButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
                     +"ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[3]/div/div[1]/button"));
             saveNewCalendarEventButton.click();
@@ -370,21 +430,6 @@ public class CreateEditDeleteEventsTest {
 
                 }
 
-/*
-                WebElement desiredEvent = driver.findElement(By.linkText(eventNameList.get(i)));
-               // desiredEvent.click();
-                System.out.println("___________________ desiredEvent - OK");
-
-                WebElement deleteEventButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
-                        +"ng-component/div/ng-component/div/div/div/div/list-view/"
-                        +"calendar-event[" + (i + 1) + "]/div/div[3]/div[1]/div[4]/button[1]"));
-                deleteEventButton.click();
-                System.out.println("___________________ deleteEventButton - OK");
-
-                WebElement deleteEventApply = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
-                        +"ng-component/div/dialogs-list/div/div/content-dialog/div/div[1]/div/div[3]/button"));
-                deleteEventApply.click();
-                System.out.println("___________________ deleteEventApply - OK");*/
             }
         }
         //==================================================================================================
@@ -392,24 +437,19 @@ public class CreateEditDeleteEventsTest {
         System.out.println("___________________ main page 2 - OK");
 
     }
-/*
+
     @AfterClass
     public static void tearDown() {
-        try {
-            TimeUnit.SECONDS.sleep(10);
-        }
-        catch(Exception e) {
-            System.out.println("Exception!");
-        }
-        WebElement mainPage = driver.findElement(By.xpath("/html/body/app-root/div"));
-        mainPage.click();
-        System.out.println("___________________ main page 3 - OK");
+        mSleep(5);
+        WebElement titleField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));
+        titleField.click();
+        System.out.println("___________________ title field for exit - OK");
 
-        WebElement logoutButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]"
-                                                              +"/div/div[5]/div[4]"));
+        WebElement logoutButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div/"
+                +"div[5]/div[4]"));
         logoutButton.click();
         System.out.println("___________________ logoutButton click - OK");
         driver.quit();
-    }*/
+    }
 }
 
