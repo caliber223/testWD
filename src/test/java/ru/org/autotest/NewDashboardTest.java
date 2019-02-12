@@ -8,15 +8,19 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import java.io.PrintStream;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import java.io.File;
 import java.util.*;
 import java.util.ArrayList;
+import java.lang.System;
+import org.apache.log4j.Logger;
 
 
 public class NewDashboardTest {
     private static WebDriver driver;
+    private static final Logger log = Logger.getLogger(NewDashboardTest.class);
     final private long delayMilliSec = 200;
     final private long delaySec = 1;
     private static ArrayList<String> auth = new ArrayList<>();
@@ -26,7 +30,7 @@ public class NewDashboardTest {
             TimeUnit.SECONDS.sleep(sec);
         }
         catch(Exception e) {
-            System.out.println("Exception!");
+            log.error("Exception!");
         }
     }
 
@@ -35,7 +39,7 @@ public class NewDashboardTest {
             TimeUnit.MILLISECONDS.sleep(msec);
         }
         catch(Exception e) {
-            System.out.println("Exception!");
+            log.error("Exception!");
         }
     }
 
@@ -70,65 +74,73 @@ public class NewDashboardTest {
         String login = auth.get(1);
         String password = auth.get(2);
 
+        log.info("");
+        log.info("");
+        log.info("____________________ DASHBOARD TEST START ____________________");
+
         WebElement loginField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
                                                            +"/div/ng-component/div/div/form/div[1]/div/input"));
         if(login != null && !login.isEmpty()) {
             loginField.sendKeys(login);
         }
-        System.out.println("___________________ login - OK");
+        log.info("___________________ login - OK");
 
         WebElement passwordField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div/"
                                                                     +"ng-component/div/div/form/div[2]/div/input"));
         if(password != null && !password.isEmpty()) {
             passwordField.sendKeys(password);
         }
-        System.out.println("___________________ password - OK");
+        log.info("___________________ password - OK");
 
         WebElement loginButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
                                                           +"/div/ng-component/div/div/form/div[3]/div/button"));
         loginButton.click();
-        System.out.println("___________________ loginButton - OK");
+        log.info("___________________ loginButton - OK");
 
         WebElement mainPage = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));
         mainPage.click();
-        System.out.println("___________________ mainPage - OK");
+        log.info("___________________ mainPage - OK");
 
         WebElement dashboardButton = driver.findElement(By.xpath("/html/body/app-root/div/div[1]/div[2]"
                                                                 +"/div/div[1]/div[1]/span"));
         dashboardButton.click();
-        System.out.println("___________________ dashboardButton - OK");
+        log.info("___________________ dashboardButton - OK");
+
+        List<WebElement> widgetsList = driver.findElements(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                +"ng-component/div/div"));
+        log.debug("widgetList size = " + widgetsList.size());
 
         WebElement addGroupButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
                                                                   +"/ng-component/div/div/button"));
         addGroupButton.click();
-        System.out.println("___________________ addGroupButton - OK");
+        log.info("___________________ addGroupButton - OK");
         milliSleep(delayMilliSec);
 
-        WebElement groupNameField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
-                                                                +"/ng-component/div/div/div[2]/div[2]/input[1]"));
+        WebElement groupNameField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                +"ng-component/div/div/div[2]/div[2]/input[1]"));
         String groupName = new String();
-        groupName = "testGroup(" + cTime + ")";
+        groupName = "autoTestGroup(" + cTime + ")";
         groupNameField.sendKeys(groupName);
-        System.out.println("___________________ groupNameField - OK");
+        log.info("___________________ groupNameField - OK");
+        milliSleep(delayMilliSec);
 
-        WebElement addWidgetButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
-                                                                +"/ng-component/div/div/div[2]/div[2]/button[1]"));
+      /*  WebElement addWidgetButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                +"ng-component/div/div/div[2]/div[2]/button[1]"));
         addWidgetButton.click();
-        System.out.println("___________________ addWidgetButton - OK");
+        log.info("___________________ addWidgetButton - OK");*/
 
-        WebElement saveGroupButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
-                                                                 +"/ng-component/div/div/div[2]/div[2]/div[2]/i"));
+        WebElement saveGroupButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                +"ng-component/div/div/div[2]/div[2]/div[2]"));
         saveGroupButton.click();
-        System.out.println("___________________ saveGroupButton - OK");
-
+        log.info("___________________ saveGroupButton - OK");
 
     }
 
     @AfterClass
     public static void tearDown() {
         mSleep(2);
-        WebElement logoutButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]"
-                                                               +"/div/div[5]/div[3]/span"));
+        WebElement logoutButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div/"
+                +"div[5]/div[4]"));
         logoutButton.click();
         driver.quit();
     }

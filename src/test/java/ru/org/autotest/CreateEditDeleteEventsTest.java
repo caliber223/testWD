@@ -13,10 +13,12 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
+import org.apache.log4j.Logger;
 
 public class CreateEditDeleteEventsTest {
 
     private static WebDriver driver;
+    private static final Logger log = Logger.getLogger(CreateEditDeleteEventsTest.class);
     private static Vector<String> eventNameList = new Vector();
     final private long delayMilliSec = 200;
     final private long delaySec = 1;
@@ -28,7 +30,7 @@ public class CreateEditDeleteEventsTest {
             TimeUnit.SECONDS.sleep(sec);
         }
         catch(Exception e) {
-            System.out.println("Exception!");
+            log.error("Exception!");
         }
     }
 
@@ -37,10 +39,9 @@ public class CreateEditDeleteEventsTest {
             TimeUnit.MILLISECONDS.sleep(msec);
         }
         catch(Exception e) {
-            System.out.println("Exception!");
+            log.error("Exception!");
         }
     }
-
 
     @BeforeClass
     public static void setup() {
@@ -60,7 +61,7 @@ public class CreateEditDeleteEventsTest {
             }
         }
         catch (Exception e) {
-            System.out.println("Error! File not found");
+            log.error("Error! File not found");
         }
 
         driver.get(auth.get(0));
@@ -68,7 +69,7 @@ public class CreateEditDeleteEventsTest {
 
     @Test
     public void userLogin() {
-        System.out.println("============================ CREATE EVENTS ==========================");
+        log.info("============================ CREATE EVENTS ==========================");
         int numberEvents = 1;
         int numberExternalEvents = 1;
 
@@ -84,19 +85,19 @@ public class CreateEditDeleteEventsTest {
         if(login != null && !login.isEmpty()) {
             loginField.sendKeys(login);
         }
-        System.out.println("___________________ login - OK");
+        log.info("___________________ login - OK");
 
         WebElement passwordField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
                 +"/div/ng-component/div/div/form/div[2]/div/input"));
         if(password != null && !password.isEmpty()) {
             passwordField.sendKeys(password);
         }
-        System.out.println("___________________ password - OK");
+        log.info("___________________ password - OK");
 
         WebElement loginButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
                 +"/div/ng-component/div/div/form/div[3]/div/button"));
         loginButton.click();
-        System.out.println("___________________ loginButton - OK");
+        log.info("___________________ loginButton - OK");
 
         //==================================== ADD CALENDAR EVENT  =======================================
 
@@ -108,21 +109,21 @@ public class CreateEditDeleteEventsTest {
         for(int n = 0; n < numberEvents; n++) {
 
             mainPage.click();
-            System.out.println("___________________ mainPage - OK");
+            log.info("___________________ mainPage - OK");
 
             libraryButton.click();
-            System.out.println("___________________ libraryButton - OK");
+            log.info("___________________ libraryButton - OK");
 
             milliSleep(200);
             eventsButton = driver.findElement(By.xpath("/html/body/app-root/div/div[1]/div[2]/div[2]/div[5]"));
             eventsButton.click();
-            System.out.println("___________________ eventsButton - OK");
+            log.info("___________________ eventsButton - OK");
 
             WebElement createNewCalendarEvent = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
                     +"ng-component/div/ng-component/div/div/list-view-toolbar-complex/list-view-toolbar"
                     +"/div/div/div[4]/button[1]"));
             createNewCalendarEvent.click();
-            System.out.println("___________________ createNewCalendarEventButton - OK");
+            log.info("___________________ createNewCalendarEventButton - OK");
 
             WebElement createNameEventButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
                     +"/ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[1]"
@@ -132,7 +133,7 @@ public class CreateEditDeleteEventsTest {
             if (nameEvent != null && !nameEvent.isEmpty()) {
                 createNameEventButton.sendKeys(nameEvent);
             }
-            System.out.println("___________________ nameEvent - OK");
+            log.info("___________________ nameEvent - OK");
 
             WebElement alwaysActiveButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
                     +"ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/"
@@ -256,7 +257,7 @@ public class CreateEditDeleteEventsTest {
             addAction.click();
 
             List<WebElement> actionsList = driver.findElements(By.tagName("event-action"));
-            System.out.printf("\n____________________ size of actionsList = %d\n", actionsList.size());
+            log.debug("____________________ size of actionsList = " + actionsList.size());
 
             WebElement selectAction = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
                     +"ng-component/div/ng-component/dialog-event/dialog-select-actions/dm-dialog/div/div/div/div[2]"
@@ -271,7 +272,7 @@ public class CreateEditDeleteEventsTest {
             WebElement saveNewCalendarEventButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
                     +"ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[3]/div/div[1]/button"));
             saveNewCalendarEventButton.click();
-            System.out.println("___________________ saveNewEventButton - OK");
+            log.info("___________________ saveNewEventButton - OK");
 
             eventNameList.add(nameEvent);
 
@@ -322,36 +323,35 @@ public class CreateEditDeleteEventsTest {
                     +"div/div[1]/button"));
             saveExternalEventButton.click();
             milliSleep(delayMilliSec);
-            System.out.println("___________________ saveNewExternalEvent - OK");
+            log.info("___________________ saveNewExternalEvent - OK");
             eventNameList.add(nameExternalEvent);
-            System.out.printf("\n___________________ eventNameList.size = %d\n", eventNameList.size());
+            log.info("___________________ eventNameList.size = " + eventNameList.size());
             mSleep(2);
         }
         //===================================================================================================
 
-        System.out.println("============================ DELETE EVENTS ==========================");
+        log.info("============================ DELETE EVENTS ==========================");
         //================================== DELETE CREATED EVENTS =========================================
         if(eventNameList.size() > 0) {
             TypeEvent typeEvent = TypeEvent.UNDEFINED;
             for(int i = 0; i < eventNameList.size(); i++) {
                 driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));  //  mainPage
-                System.out.println("___________________ mainPage_2 - OK");
+                log.info("___________________ mainPage_2 - OK");
 
                 libraryButton.click();
-                System.out.println("___________________ libraryButton_2 - OK");
+                log.info("___________________ libraryButton_2 - OK");
 
                 eventsButton.click();
-                System.out.println("___________________ eventsButton_2 - OK");
+                log.info("___________________ eventsButton_2 - OK");
 
                 //============================== DELETE CALENDAR EVENTS ===================================
                 List<WebElement> listEvents = driver.findElements(By.tagName("calendar-event"));
-                System.out.printf("___________________ listCharts for delete - OK, number events: %d\n",
-                        listEvents.size());
+                log.debug("___________________ listCharts for delete - OK, number events: " + listEvents.size());
 
                 WebElement oneCalendarEvent = null;
 
                 for(int k = 0; k < listEvents.size(); ++k) {
-                    System.out.printf("___________________ it is entry ...  iteration = %d\n", k);
+                    log.debug("___________________ it is entry ...  iteration = " + k);
                     WebElement temp = listEvents.get(k);
 
                     try {
@@ -360,10 +360,10 @@ public class CreateEditDeleteEventsTest {
                                 +"calendar-event[" + (k + 1) + "]/div/div[3]/div[1]/div[1]/div"));
 
                         String atrib = oneCalendarEvent.getText();
-                        System.out.printf("- - - - - - - - %s\n", atrib);
+                        log.debug("- - - - - - - - " + atrib);
                         if(atrib.equals(eventNameList.get(i))) {
                             typeEvent = TypeEvent.CALENDAR;
-                            System.out.println("___________________ This event is CALENDAR type!!!");
+                            log.info("___________________ This event is CALENDAR type!!!");
                             temp.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/div/"
                                     + "ng-component/div/div/div/div/list-view/calendar-event[" + (k + 1) + "]"));
                             milliSleep(delayMilliSec);
@@ -380,12 +380,12 @@ public class CreateEditDeleteEventsTest {
                             eventDeleteApplyButton.click();
                             milliSleep(delayMilliSec);
 
-                            System.out.println("___________________ calender event has been deleted successfully! -OK");
+                            log.info("___________________ calender event has been deleted successfully! -OK");
                             break;
                         }
                     }
                     catch (Exception e) {
-                        System.out.println(">>>>>>>   Exception! Element not found in calendar events  <<<<<<<<<<");
+                        log.error("Exception! Element not found in calendar events");
                     }
                 }
 
@@ -400,10 +400,10 @@ public class CreateEditDeleteEventsTest {
                                 +"ng-component/div/ng-component/div/div/div/div/list-view/"
                                 +"external-event[" + (l + 1) + "]/div/div[3]/div[1]/div[1]"));   //    /b
                         String atrib = oneExternalEvent.getText();
-                        System.out.printf("- - - - - - - - %s\n", atrib);
+                        log.debug("- - - - - - - - " + atrib);
                         if(atrib.equals(eventNameList.get(i))) {
                             typeEvent = TypeEvent.EXTERNAL;
-                            System.out.println("___________________ This event is EXTERNAL type!!!");
+                            log.info("___________________ This event is EXTERNAL type!!!");
                             temp.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/div/"
                                     +"ng-component/div/div/div/div/list-view/external-event[" + (l + 1) + "]"));
                             milliSleep(delayMilliSec);
@@ -420,21 +420,19 @@ public class CreateEditDeleteEventsTest {
                             externalEventDeleteApplyButton.click();
                             milliSleep(delayMilliSec);
 
-                            System.out.println("___________________ external event has been deleted successfully! -OK");
+                            log.info("___________________ external event has been deleted successfully! -OK");
                             break;
                         }
                     }
                     catch(Exception e) {
-                        System.out.println(">>>>>>>   Exception! Element not found in external events  <<<<<<<<<<");
+                        log.error("Exception! Element not found in external events");
                     }
-
                 }
-
             }
         }
         //==================================================================================================
         driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));
-        System.out.println("___________________ main page 2 - OK");
+        log.info("___________________ main page 2 - OK");
 
     }
 
@@ -443,12 +441,12 @@ public class CreateEditDeleteEventsTest {
         mSleep(5);
         WebElement titleField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));
         titleField.click();
-        System.out.println("___________________ title field for exit - OK");
+        log.info("___________________ title field for exit - OK");
 
         WebElement logoutButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div/"
                 +"div[5]/div[4]"));
         logoutButton.click();
-        System.out.println("___________________ logoutButton click - OK");
+        log.info("___________________ logoutButton click - OK");
         driver.quit();
     }
 }
