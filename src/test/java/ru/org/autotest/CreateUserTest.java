@@ -13,10 +13,12 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
+import org.apache.log4j.Logger;
 
 public class CreateUserTest {
 
     private static WebDriver driver;
+    private static final Logger log = Logger.getLogger(CreateUserTest.class);
     final private long delayMilliSec = 200;
     final private long delaySec = 1;
     private static ArrayList<String> auth = new ArrayList<>();
@@ -26,7 +28,7 @@ public class CreateUserTest {
             TimeUnit.SECONDS.sleep(sec);
         }
         catch(Exception e) {
-            System.out.println("Exception!");
+            log.error("Exception!");
         }
     }
 
@@ -35,7 +37,7 @@ public class CreateUserTest {
             TimeUnit.MILLISECONDS.sleep(msec);
         }
         catch(Exception e) {
-            System.out.println("Exception!");
+            log.error("Exception!");
         }
     }
 
@@ -57,7 +59,7 @@ public class CreateUserTest {
             }
         }
         catch (Exception e) {
-            System.out.println("Error! File not found");
+            log.error("Error! File not found");
         }
 
         driver.get(auth.get(0));
@@ -71,44 +73,45 @@ public class CreateUserTest {
         String password = auth.get(2);
 
         //========================== CREATE USER =======================================
+        log.info("\n\n========================== CREATE USER =======================================");
 
         WebElement loginField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
                 +"/div/ng-component/div/div/form/div[1]/div/input"));
         if(login != null && !login.isEmpty()) {
             loginField.sendKeys(login);
         }
-        System.out.println("___________________ login - OK");
+        log.info("___________________ login - OK");
 
         WebElement passwordField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
                 +"/div/ng-component/div/div/form/div[2]/div/input"));
         if(password != null && !password.isEmpty()) {
             passwordField.sendKeys(password);
         }
-        System.out.println("___________________ password - OK");
+        log.info("___________________ password - OK");
 
         WebElement loginButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
                 +"/div/ng-component/div/div/form/div[3]/div/button"));
         loginButton.click();
-        System.out.println("___________________ loginButton - OK");
+        log.info("___________________ loginButton - OK");
         milliSleep(delayMilliSec);
 
         WebElement mainPage = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));
         mainPage.click();
-        System.out.println("___________________ mainPage - OK");
+        log.info("___________________ mainPage - OK");
 
         WebElement adminButton = driver.findElement(By.xpath("/html/body/app-root/div/div[1]/div[2]/div/div[1]/div[8]/span"));
         adminButton.click();
-        System.out.println("___________________ adminButton - OK");
+        log.info("___________________ adminButton - OK");
 
         WebElement userListButton = driver.findElement(By.xpath("/html/body/app-root/div/div[1]/div[2]/div[2]/div[2]/span"));
         userListButton.click();
-        System.out.println("___________________ userListButton - OK");
+        log.info("___________________ userListButton - OK");
 
         WebElement addUserButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
                 +"/ng-component/div/ng-component/div/div/list-view-toolbar-complex/list-view-toolbar/"
                 +"div/div/div[5]/button/span"));
         addUserButton.click();
-        System.out.println("___________________ addUserButton - OK");
+        log.info("___________________ addUserButton - OK");
 
         WebElement emailUserField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
                 +"/ng-component/div/ng-component/dialog-user-profile/dm-dialog/div/div/div/div[2]"
@@ -118,7 +121,7 @@ public class CreateUserTest {
         if(emailUser != null && !emailUser.isEmpty()) {
             emailUserField.sendKeys(emailUser);
         }
-        System.out.println("___________________ emailUserField - OK");
+        log.info("___________________ emailUserField - OK");
 
         WebElement nameUserField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
                 +"/ng-component/div/ng-component/dialog-user-profile/dm-dialog/div/div/div/div[2]"
@@ -128,7 +131,7 @@ public class CreateUserTest {
         if(nameUser != null && !nameUser.isEmpty()) {
             nameUserField.sendKeys(nameUser);
         }
-        System.out.println("___________________ nameUserField - OK");
+        log.info("___________________ nameUserField - OK");
 
         WebElement timeZoneField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
                 +"/ng-component/div/ng-component/dialog-user-profile/dm-dialog/div/div/div/div[2]"
@@ -138,7 +141,7 @@ public class CreateUserTest {
         if(timeZone != null && !timeZone.isEmpty()) {
             timeZoneField.sendKeys(timeZone);
         }
-        System.out.println("___________________ timeZoneField - OK");
+        log.info("___________________ timeZoneField - OK");
 
         String userPassword = new String();
         userPassword = "123";
@@ -148,7 +151,7 @@ public class CreateUserTest {
         if(userPassword != null && !userPassword.isEmpty()) {
             password1UserField.sendKeys(userPassword);
         }
-        System.out.println("___________________ password1UserField - OK");
+        log.info("___________________ password1UserField - OK");
 
         WebElement password2UserField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
                 +"/ng-component/div/ng-component/dialog-user-profile/dm-dialog/div/div/div/div[2]/div/div/div[2]"
@@ -156,14 +159,13 @@ public class CreateUserTest {
         if(userPassword != null &&!userPassword.isEmpty()) {
             password2UserField.sendKeys(userPassword);
         }
-        System.out.println("___________________ password2UserField - OK");
+        log.info("___________________ password2UserField - OK");
 
         WebElement createUser = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
                 +"/ng-component/div/ng-component/dialog-user-profile/dm-dialog/div/div/div/div[3]"
                 +"/div/div[1]/button"));
         createUser.click();
-        System.out.println("___________________ createUserField - OK");
-
+        log.info("___________________ createUserField - OK");
 
     }
 

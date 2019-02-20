@@ -16,10 +16,12 @@ import java.util.List;
 import java.util.Vector;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
+import org.apache.log4j.Logger;
 
 public class CreateDeleteChartTest {
 
     private static WebDriver driver;
+    private static final Logger log = Logger.getLogger(CreateDeleteChartTest.class);
     private static Vector<String> newChartNameList = new Vector();
     final private long delayMilliSec = 200;
     final private long delaySec = 1;
@@ -30,7 +32,7 @@ public class CreateDeleteChartTest {
             TimeUnit.SECONDS.sleep(sec);
         }
         catch(Exception e) {
-            System.out.println("Exception!");
+            log.error("Exception!");
         }
     }
 
@@ -39,7 +41,7 @@ public class CreateDeleteChartTest {
             TimeUnit.MILLISECONDS.sleep(msec);
         }
         catch(Exception e) {
-            System.out.println("Exception!");
+            log.error("Exception!");
         }
     }
 
@@ -61,7 +63,7 @@ public class CreateDeleteChartTest {
             }
         }
         catch (Exception e) {
-            System.out.println("Error! File not found");
+            log.error("Error! File not found");
         }
 
         driver.get(auth.get(0));
@@ -69,7 +71,7 @@ public class CreateDeleteChartTest {
 
     @Test
     public void userLogin() {
-        System.out.println("============================ CREATE CHART ==========================");
+        log.info("\n\n============================ CREATE CHART ==========================");
         int numberCharts = 1;   //-------------------- !!!!!!!!--------------------
 
         Date currentTime = new Date();
@@ -84,19 +86,19 @@ public class CreateDeleteChartTest {
         if(login != null && !login.isEmpty()) {
             loginField.sendKeys(login);
         }
-        System.out.println("___________________ login - OK");
+        log.info("___________________ login - OK");
 
         WebElement passwordField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
                 +"/div/ng-component/div/div/form/div[2]/div/input"));
         if(password != null && !password.isEmpty()) {
             passwordField.sendKeys(password);
         }
-        System.out.println("___________________ password - OK");
+        log.info("___________________ password - OK");
 
         WebElement loginButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
                 +"/div/ng-component/div/div/form/div[3]/div/button"));
         loginButton.click();
-        System.out.println("___________________ loginButton - OK");
+        log.info("___________________ loginButton - OK");
         milliSleep(delayMilliSec);
 
         WebElement mainPage = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));
@@ -108,15 +110,15 @@ public class CreateDeleteChartTest {
         for(int n = 0; n < numberCharts; n++) {
 
             mainPage.click();
-            System.out.println("___________________ mainPage - OK");
+            log.info("___________________ mainPage - OK");
 
             libraryButton.click();
-            System.out.println("___________________ libraryButton - OK");
+            log.info("___________________ libraryButton - OK");
 
             chartsButton = driver.findElement(By.xpath("/html/body/app-root/div/div[1]/div[2]/div[2]/div[4]/span"));
             chartsButton.click();
             chartsButton.click();
-            System.out.println("___________________ chartsButton - OK");
+            log.info("___________________ chartsButton - OK");
 
          //   WebElement createChartButtonArea = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"));
          //   createChartButtonArea.click();
@@ -125,7 +127,7 @@ public class CreateDeleteChartTest {
                     +"/ng-component/div/ng-component/div/div/list-view-toolbar-share/list-view-toolbar-complex/"
                     +"list-view-toolbar/div/div/div[4]/button/span"));
             createChartButton.click();
-            System.out.println("___________________ createChartButton - OK");
+            log.info("___________________ createChartButton - OK");
 
             WebElement createNameChartButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
                     +"/ng-component/div/ng-component/dialog-chart-template/dm-dialog/div/div/div/div[2]"
@@ -135,45 +137,45 @@ public class CreateDeleteChartTest {
             if (nameChart != null && !nameChart.isEmpty()) {
                 createNameChartButton.sendKeys(nameChart);
             }
-            System.out.println("___________________ nameChart - OK");
+            log.info("___________________ nameChart - OK");
 
             WebElement shortDescriptionField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
                     +"/ng-component/div/ng-component/dialog-chart-template/dm-dialog/div/div/div/div[2]"
                     +"/div/div/div[2]/div/div[1]/div[2]/div[1]/input"));
             shortDescriptionField.click();
             shortDescriptionField.sendKeys("some description");
-            System.out.println("___________________ shortDescription - OK");
+            log.info("___________________ shortDescription - OK");
 
             WebElement typeDataField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
                     +"/ng-component/div/ng-component/dialog-chart-template/dm-dialog/div/div/div/div[2]"
                     +"/div/div/div[2]/div/div[1]/div[2]/div[2]/select"));
             typeDataField.click();
-            System.out.println("___________________ typeDataField - OK");
+            log.info("___________________ typeDataField - OK");
 
             WebElement typeData = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
                     +"/ng-component/div/ng-component/dialog-chart-template/dm-dialog/div/div/div/div[2]"
                     +"/div/div/div[2]/div/div[1]/div[2]/div[2]/select/option[1]"));
             typeData.click();
-            System.out.println("___________________ typeData - OK");
+            log.info("___________________ typeData - OK");
 
             WebElement expressionField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
                     +"/ng-component/div/ng-component/dialog-chart-template/dm-dialog/div/div/div/div[2]"
                     +"/div/div/div[2]/div/div[2]/div/codemirror/div/div[6]/div[1]/div/div/div/div[5]/div/pre"));
             expressionField.click();
             expressionField.click();
-            System.out.println("___________________ expressionField - OK");
+            log.info("___________________ expressionField - OK");
 
             WebElement editorContainer = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
                     +"/ng-component/div/ng-component/dialog-chart-template/dm-dialog/div/div/div/div[2]"
                     +"/div/div/div[2]/div/div[2]/div"));           // container
             editorContainer.click();
-            System.out.println("___________________ editorConteiner - OK");
+            log.info("___________________ editorConteiner - OK");
 
             WebElement expressionText = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
                     +"/ng-component/div/ng-component/dialog-chart-template/dm-dialog/div/div/div/div[2]"
                     +"/div/div/div[2]/div/div[2]/div/codemirror/div/div[1]/textarea"));  //  textarea
             expressionText.sendKeys("load.actions.attempts");
-            System.out.println("___________________ expressionText - OK");
+            log.info("___________________ expressionText - OK");
 
             shortDescriptionField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
                     +"/ng-component/div/ng-component/dialog-chart-template/dm-dialog/div/div/div/div[2]"
@@ -186,45 +188,45 @@ public class CreateDeleteChartTest {
                     +"/ng-component/div/ng-component/dialog-chart-template/dm-dialog/div/div/div/div[2]"
                     +"/div/div/div[3]"));
             addGraphButton.click();
-            System.out.println("___________________ addGraphButton - OK");
+            log.info("___________________ addGraphButton - OK");
 
             WebElement shortDescription2Field = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
                     +"/ng-component/div/ng-component/dialog-chart-template/dm-dialog/div/div/div/div[2]"
                     +"/div/div/div[3]/div/div[1]/div[2]/div[1]/input"));
             shortDescription2Field.click();
             shortDescription2Field.sendKeys("some description 2");
-            System.out.println("___________________ shortDescription2Field - OK");
+            log.info("___________________ shortDescription2Field - OK");
 
             WebElement typeData2Field = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
                     +"/ng-component/div/ng-component/dialog-chart-template/dm-dialog/div/div/div/div[2]"
                     +"/div/div/div[3]/div/div[1]/div[2]/div[2]/select"));
             typeData2Field.click();
-            System.out.println("___________________ typeData2Field - OK");
+            log.info("___________________ typeData2Field - OK");
 
             WebElement typeData2 = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
                     +"/ng-component/div/ng-component/dialog-chart-template/dm-dialog/div/div/div/div[2]"
                     +"/div/div/div[3]/div/div[1]/div[2]/div[2]/select/option[6]"));
             typeData2.click();
-            System.out.println("___________________ typeData2 - OK");
+            log.info("___________________ typeData2 - OK");
 
             WebElement expression2Field = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
                     +"/ng-component/div/ng-component/dialog-chart-template/dm-dialog/div/div/div/div[2]"
                     +"/div/div/div[3]/div/div[2]"));
             expression2Field.click();
             expression2Field.click();
-            System.out.println("___________________ expression2Field - OK");
+            log.info("___________________ expression2Field - OK");
 
             WebElement editorContainer2 = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
                     +"/ng-component/div/ng-component/dialog-chart-template/dm-dialog/div/div/div/div[2]"
                     +"/div/div/div[3]/div/div[2]/div"));           // container
             editorContainer2.click();
-            System.out.println("___________________ editorContainer2 - OK");
+            log.info("___________________ editorContainer2 - OK");
 
             WebElement expressionText2 = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
                     +"/div[2]/ng-component/div/ng-component/dialog-chart-template/dm-dialog/div/div/div/div[2]"
                     +"/div/div/div[3]/div/div[2]/div/codemirror/div/div[1]/textarea"));  //  textarea
             expressionText2.sendKeys("http.tx.packets");
-            System.out.println("___________________ expressionText2 - OK");
+            log.info("___________________ expressionText2 - OK");
 
 // ==================================================================================================================
 
@@ -232,34 +234,34 @@ public class CreateDeleteChartTest {
                     +"/ng-component/div/ng-component/dialog-chart-template/dm-dialog/div/div/div/div[3]"
                     +"/div/div[1]/button"));
             createChartApplyButton.click();
-            System.out.println("___________________ createChartApplyButton - OK");
+            log.info("___________________ createChartApplyButton - OK");
 
             newChartNameList.add(nameChart);
 
         }
 
         mSleep(delaySec);
-        System.out.println("============================ DELETE CHARTS ==========================");
+        log.info("============================ DELETE CHARTS ==========================");
         //================================== DELETE CREATED CHARTS =========================================
         if(newChartNameList.size() > 0) {
             for(int i = 0; i < newChartNameList.size(); i++) {
                 driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));  //   mainPage
-                System.out.println("___________________ mainPage fo delete - OK");
+                log.info("___________________ mainPage fo delete - OK");
 
                 libraryButton.click();
-                System.out.println("___________________ libraryButton for delete - OK");
+                log.info("___________________ libraryButton for delete - OK");
 
                 driver.findElement(By.xpath("/html/body/app-root/div/div[1]/div[2]/div[2]/div[4]/span"));
                 chartsButton.click();
-                System.out.println("___________________ chartsButton for delete - OK");
+                log.info("___________________ chartsButton for delete - OK");
 
                 List<WebElement> listCharts =  (List<WebElement>) driver.findElements(By.tagName("atr-chart-template"));
-                System.out.printf("___________________ listCharts for delete - OK, number charts: %d\n", listCharts.size());
+                log.debug("___________________ listCharts for delete - OK, number charts: " + listCharts.size());
 
                 WebElement oneChart = null;
 
                 for(int k = 0; k < listCharts.size(); k++) {
-                    System.out.printf("___________________ it is entry ...  iteration = %d\n", k);
+                    log.debug("___________________ it is entry ...  iteration = " + k);
                     WebElement temp = listCharts.get(k);
 
                     try {
@@ -268,9 +270,9 @@ public class CreateDeleteChartTest {
                                 +"/div[3]/div[1]/div[1]/div"));
                  //       /html/body/app-root/div/div[2]/div[2]/ng-component/div/ng-component/div/div/div/div/list-view/atr-chart-template[1]/div/div[3]/div[1]/div[1]/div/text()
                         String atrib = oneChart.getText();
-                        System.out.printf("- - - - - - - - %s\n", atrib);
+                        log.debug("- - - - - - - - " + atrib);
                         if(atrib.equals(newChartNameList.get(i))) {
-                            System.out.println("___________________ This element is exist!!!");
+                            log.info("___________________ This element is exist!!!");
                             temp.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/"
                                     +"div/ng-component/div/div/div/div/list-view/atr-chart-template[" + (k+1) + "]"));
 
@@ -281,12 +283,12 @@ public class CreateDeleteChartTest {
                             TimeUnit.SECONDS.sleep(10);
                             chartActionsButton.click();
 
-                            System.out.println("___________________ chartActionsButton - OK");
+                            log.info("___________________ chartActionsButton - OK");
                             break;
                         }
                     }
                     catch(Exception e) {
-                        System.out.println(">>>>>>>>>>>>>>   Exception! Element not found   <<<<<<<<<<<<<<<<");
+                        log.error("Exception! Element not found");
                     }
 
                 }
@@ -303,7 +305,7 @@ public class CreateDeleteChartTest {
             TimeUnit.SECONDS.sleep(10);
         }
         catch(Exception e) {
-            System.out.println("Exception!");
+            log.info("Exception!");
         }
         WebElement logoutButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]"
                 +"/div/div[5]/div[3]/span"));

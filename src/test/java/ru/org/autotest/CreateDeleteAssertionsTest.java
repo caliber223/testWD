@@ -14,10 +14,12 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import java.util.Vector;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
+import org.apache.log4j.Logger;
 
 public class CreateDeleteAssertionsTest {
 
     private static WebDriver driver;
+    private static final Logger log = Logger.getLogger(CreateDeleteAssertionsTest.class);
     private static Vector<String> conditionNameList = new Vector();
     final private long delayMilliSec = 200;
     final private long delaySec = 1;
@@ -28,7 +30,7 @@ public class CreateDeleteAssertionsTest {
             TimeUnit.SECONDS.sleep(sec);
         }
         catch(Exception e) {
-            System.out.println("Exception!");
+            log.error("Exception!");
         }
     }
 
@@ -36,7 +38,7 @@ public class CreateDeleteAssertionsTest {
         try {
             TimeUnit.MILLISECONDS.sleep(msec);
         } catch (Exception e) {
-            System.out.println("Exception!");
+            log.error("Exception!");
         }
     }
 
@@ -58,7 +60,7 @@ public class CreateDeleteAssertionsTest {
             }
         }
         catch (Exception e) {
-            System.out.println("Error! File not found");
+            log.error("Error! File not found");
         }
 
         driver.get(auth.get(0));
@@ -66,7 +68,7 @@ public class CreateDeleteAssertionsTest {
 
     @Test
     public void userLogin() {
-        System.out.println("============================ CREATE ASSERTION ==========================");
+        log.info("\n\n============================ CREATE ASSERTION ==========================");
         int numberConditions = 1;   //-------------------- !!!!!!!!--------------------
 
         Date currentTime = new Date();
@@ -81,19 +83,19 @@ public class CreateDeleteAssertionsTest {
         if(login != null && !login.isEmpty()) {
             loginField.sendKeys(login);
         }
-        System.out.println("___________________ login - OK");
+        log.info("___________________ login - OK");
 
         WebElement passwordField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
                 +"/div/ng-component/div/div/form/div[2]/div/input"));
         if(password != null && !password.isEmpty()) {
             passwordField.sendKeys(password);
         }
-        System.out.println("___________________ password - OK");
+        log.info("___________________ password - OK");
 
         WebElement loginButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
                 +"/div/ng-component/div/div/form/div[3]/div/button"));
         loginButton.click();
-        System.out.println("___________________ loginButton - OK");
+        log.info("___________________ loginButton - OK");
         milliSleep(delayMilliSec);
 
         WebElement mainPage = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));
@@ -105,16 +107,16 @@ public class CreateDeleteAssertionsTest {
         for(int n = 0; n < numberConditions; n++) {
 
             mainPage.click();
-            System.out.println("___________________ mainPage - OK");
+            log.info("___________________ mainPage - OK");
 
             libraryButton.click();
-            System.out.println("___________________ libraryButton - OK");
+            log.info("___________________ libraryButton - OK");
 
             assertionsButton = driver.findElement(By.xpath("/html/body/app-root/div/div[1]/div[2]"
                     +"/div[2]/div[3]/span"));
             assertionsButton.click();
             assertionsButton.click();
-            System.out.println("___________________ assertionButton - OK");
+            log.info("___________________ assertionButton - OK");
 
             WebElement createAssertionButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
                     +"/ng-component/div/ng-component/div/div/list-view-toolbar-share/"
@@ -129,117 +131,130 @@ public class CreateDeleteAssertionsTest {
             if (nameCondition != null && !nameCondition.isEmpty()) {
                 createNameConditionButton.sendKeys(nameCondition);
             }
-            System.out.println("___________________ nameCondition - OK");
+            log.info("___________________ nameCondition - OK");
 
-            WebElement expressionWindow = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/div/ng-component/dialog-condition/dm-dialog/div/div/div/div[2]/div/div/div[2]/div[2]/codemirror/div/div[6]"));
+            WebElement expressionWindow = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                    +"ng-component/div/ng-component/dialog-condition/dm-dialog/div/div/div/div[2]/div/div/div[2]/"
+                    +"div[2]/codemirror/div/div[6]/div[1]/div/div/div/div[5]/div/pre"));
             expressionWindow.click();
-            System.out.println("___________________ expressionWindow - OK");
+            log.info("___________________ expressionWindow - OK");
 
-            WebElement expressionsField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/div/ng-component/dialog-condition/dm-dialog/div/div/div/div[2]/div/div/div[2]/div[2]/codemirror/div/div[6]/div[1]/div/div/div/div[5]/div[1]/pre/span"));
-            String expression = "ANY load.actions.succeeds + load.actions.fails + load.actions.aborts == load.actions.attempts";
-            expressionsField.click();
-            expressionsField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/div/ng-component/dialog-condition/dm-dialog/div/div/div/div[2]/div/div/div[2]/div[2]/codemirror/div/div[6]/div[1]/div/div/div/div[5]/div[1]/pre/span"));
+            WebElement expressionsField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                    +"ng-component/div/ng-component/dialog-condition/dm-dialog/div/div/div/div[2]/div/div/div[2]/"
+                    +"div[2]/codemirror/div/div[1]/textarea"));
+            String expression = "ANY load.actions.succeeds + load.actions.fails + load.actions.aborts "
+                    +"== load.actions.attempts";
+            milliSleep(delayMilliSec);
             expressionsField.sendKeys(expression);
-          /*  WebElement keyAny = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/div/ng-component/dialog-condition/dm-dialog/div/div/div/div[2]/div/div/div[2]/div[2]/codemirror/div/div[6]/div[1]/div/div/div/div[5]/div/pre/span/span[1]"));
-            keyAny.sendKeys("ANY");
+            log.info("___________________ expressionsField - OK");
 
-            WebElement key2 = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/div/ng-component/dialog-condition/dm-dialog/div/div/div/div[2]/div/div/div[2]/div[2]/codemirror/div/div[6]/div[1]/div/div/div/div[5]/div/pre/span/span[2]"));
-            key2.sendKeys("load");
-            WebElement key3 = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/div/ng-component/dialog-condition/dm-dialog/div/div/div/div[2]/div/div/div[2]/div[2]/codemirror/div/div[6]/div[1]/div/div/div/div[5]/div/pre/span/span[3]"));
-            key3.sendKeys("actions");
-            WebElement key4 = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/div/ng-component/dialog-condition/dm-dialog/div/div/div/div[2]/div/div/div[2]/div[2]/codemirror/div/div[6]/div[1]/div/div/div/div[5]/div/pre/span/span[4]"));
-            key4.sendKeys("attempts");*/
-            System.out.println("___________________ expressionsField - OK");
-
-            /*WebElement showSyntaxHelpButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
+            WebElement showSyntaxHelpButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
                     +"/ng-component/div/ng-component/dialog-condition/dm-dialog/div/div/div/div[2]/div/div/div[2]"
                     +"/div[1]/md-checkbox[1]/div[1]"));
             showSyntaxHelpButton.click();
-            System.out.println("___________________ showSyntaxHelpButton - OK");
+            log.info("___________________ showSyntaxHelpButton - OK");
 
             WebElement showSyntaxHelp2Button = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
                     +"/ng-component/div/ng-component/dialog-condition/dm-dialog/div/div/div/div[2]/div/div/div[2]"
                     +"/div[1]/md-checkbox[1]/div[1]"));
             showSyntaxHelp2Button.click();
-            System.out.println("___________________ showSyntaxHelpButton - OK");
+            log.info("___________________ showSyntaxHelpButton - OK");
 
             WebElement lineWrappingButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
                     +"/ng-component/div/ng-component/dialog-condition/dm-dialog/div/div/div/div[2]/div/div/div[2]"
                     +"/div[1]/md-checkbox[2]/div[1]"));
             lineWrappingButton.click();
-            System.out.println("___________________ lineWrappingButton - OK");
+            log.info("___________________ lineWrappingButton - OK");
 
             WebElement lineWrapping2Button = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
                     +"/ng-component/div/ng-component/dialog-condition/dm-dialog/div/div/div/div[2]/div/div/div[2]"
                     +"/div[1]/md-checkbox[2]/div[1]"));
             lineWrapping2Button.click();
-            System.out.println("___________________ lineWrapping2Button - OK");
+            log.info("___________________ lineWrapping2Button - OK");
 
             WebElement lineNumbersButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
                     +"/ng-component/div/ng-component/dialog-condition/dm-dialog/div/div/div/div[2]/div/div/div[2]"
                     +"/div[1]/md-checkbox[3]/div[1]"));
             lineNumbersButton.click();
             lineNumbersButton.click();
-            System.out.println("___________________ lineNumberButton - OK");*/
+            log.info("___________________ lineNumberButton - OK");
 
             WebElement createAssertionApplyButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
                     +"/div[2]/ng-component/div/ng-component/dialog-condition/dm-dialog/div/div/div/div[3]"
                     +"/div/div[1]/button"));
             createAssertionApplyButton.click();
-            System.out.println("___________________ createAssertionApplyButton - OK");
+            log.info("___________________ createAssertionApplyButton - OK");
 
             conditionNameList.add(nameCondition);
+            log.info("___________________ condition " + nameCondition + " created successful");
 
             mSleep(2);
         }
 
-        System.out.println("============================ DELETE SUITES ==========================");
-        //================================== DELETE CREATED SUITES =========================================
+        log.info("============================ DELETE ASSERTIONS ==========================");
+        //================================== DELETE CREATED ASSERTIONS =========================================
         if(conditionNameList.size() > 0) {
             for(int i = 0; i < conditionNameList.size(); i++) {
                 driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));  //   mainPage
-                System.out.println("___________________ mainPage_2 - OK");
+                log.info("___________________ mainPage_2 - OK");
 
                 libraryButton.click();
-                System.out.println("___________________ libraryButton_2 - OK");
+                log.info("___________________ libraryButton_2 - OK");
 
                 driver.findElement(By.xpath("/html/body/app-root/div/div[1]/div[2]"
                         +"/div[2]/div[3]/span"));
                 assertionsButton.click();
-                System.out.println("___________________ assertionsButton_2 - OK");
+                log.info("___________________ assertionsButton_2 - OK");
 
-                WebElement desiredCondition = driver.findElement(By.linkText(conditionNameList.get(i)));
-                desiredCondition.click();
-                System.out.println("___________________ desiredCondition - OK");
+                List<WebElement> conditions = driver.findElements(By.tagName("atr-condition"));
+                log.debug("___________________ conditionList size = " + conditions.size());
 
-                WebElement deleteConditionButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"+
-                        "/div[2]/ng-component/div/ng-component/div/div/div/div/list-view"));
-                deleteConditionButton.click();
-                System.out.println("___________________ deleteConditionButton - OK");
+                for (int j = 0; j < conditions.size(); j++) {
+                    log.debug("....... iteration " + j + "  step 1");
+                    WebElement cName = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                            +"ng-component/div/ng-component/div/div/div/div/list-view/"
+                            +"atr-condition[" + (j + 1) + "]/div/div[3]/div/div[1]/div"));
+                    log.debug("....... iteration " + j + "  step 2");
+                    if (conditionNameList.get(i).equals(cName.getText())) {
+                        log.debug("....... iteration " + j + "  step 3");
+                        log.info("Condition " + conditionNameList.get(i) + " is found");
+                        WebElement conditionDeleteButton = driver.findElement(By.xpath("/html/body/app-root/div/"
+                                +"div[2]/div[2]/ng-component/div/ng-component/div/div/div/div/list-view/"
+                                +"atr-condition[" + (j + 1) + "]/div/div[3]/div/div[5]/button[2]"));
+                        conditionDeleteButton.click();
+                        log.debug("....... iteration " + j + "  step 4");
+                        milliSleep(delayMilliSec);
 
-                WebElement deleteConditionApplyButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
-                        +"/div[2]/ng-component/div/dialogs-list/div/div/content-dialog/div/div[1]/div/div[3]/button"));
-                deleteConditionApplyButton.click();
+                        WebElement contextDeleteButton = driver.findElement(By.xpath("/html/body/app-root/"
+                                +"context-menu/ul/li[8]"));
+                        contextDeleteButton.click();
+                        milliSleep(delayMilliSec);
+
+                        WebElement deleteApplyButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/"
+                                +"div[2]/ng-component/div/dialogs-list/div/div/"
+                                +"content-dialog/div/div[1]/div/div[3]/button"));
+                        deleteApplyButton.click();
+                        log.debug("....... iteration " + j + "  step 5");
+                        milliSleep(delayMilliSec);
+                        log.info("Condition " + conditionNameList.get(i) + " is deleted successfully");
+                        break;
+                    }
+                }
 
             }
         }
         //==================================================================================================
 
     }
-/*
+
     @AfterClass
     public static void tearDown() {
-        try {
-            TimeUnit.SECONDS.sleep(10);
-        }
-        catch(Exception e) {
-            System.out.println("Exception!");
-        }
-        WebElement logoutButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]"
-                +"/div/div[5]/div[3]/span"));
+        milliSleep(200);
+        WebElement logoutButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/"
+                +"div/div[5]/div[4]"));
         logoutButton.click();
         driver.quit();
-    }*/
+    }
 }
 
 

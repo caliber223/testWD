@@ -14,10 +14,12 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import java.util.Vector;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
+import org.apache.log4j.Logger;
 
 public class CreateAndRunSuiteTest {
 
     private static WebDriver driver;
+    private static final Logger log = Logger.getLogger(CreateAndRunSuiteTest.class);
     private static Vector<String> suiteNameList = new Vector();
     final private long delayMilliSec = 200;
     final private long delaySec = 1;
@@ -28,7 +30,7 @@ public class CreateAndRunSuiteTest {
             TimeUnit.SECONDS.sleep(sec);
         }
         catch(Exception e) {
-            System.out.println("Exception!");
+            log.error("Exception!");
         }
     }
 
@@ -37,7 +39,7 @@ public class CreateAndRunSuiteTest {
             TimeUnit.MILLISECONDS.sleep(msec);
         }
         catch(Exception e) {
-            System.out.println("Exception!");
+            log.error("Exception!");
         }
     }
 
@@ -59,7 +61,7 @@ public class CreateAndRunSuiteTest {
             }
         }
         catch (Exception e) {
-            System.out.println("Error! File not found");
+            log.error("Error! File not found");
         }
 
         driver.get(auth.get(0));
@@ -67,8 +69,9 @@ public class CreateAndRunSuiteTest {
 
     @Test
     public void userLogin() {
-        System.out.println("============================ CREATE SUITES ==========================");
+        log.info("\n\n============================ CREATE SUITES ==========================");
         int numberSuites = 1;   //-------------------- !!!!!!!!--------------------
+
 
         Date currentTime = new Date();
         String cTime = currentTime.toString();
@@ -82,19 +85,19 @@ public class CreateAndRunSuiteTest {
         if(login != null && !login.isEmpty()) {
             loginField.sendKeys(login);
         }
-        System.out.println("___________________ login - OK");
+        log.info("___________________ login - OK");
 
         WebElement passwordField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
                 +"/div/ng-component/div/div/form/div[2]/div/input"));
         if(password != null && !password.isEmpty()) {
             passwordField.sendKeys(password);
         }
-        System.out.println("___________________ password - OK");
+        log.info("___________________ password - OK");
 
         WebElement loginButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
                 +"/div/ng-component/div/div/form/div[3]/div/button"));
         loginButton.click();
-        System.out.println("___________________ loginButton - OK");
+        log.info("___________________ loginButton - OK");
         milliSleep(delayMilliSec);
 
         WebElement mainPage = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));
@@ -104,16 +107,16 @@ public class CreateAndRunSuiteTest {
         for(int n = 0; n < numberSuites; n++) {
 
             mainPage.click();
-            System.out.println("___________________ mainPage - OK");
+            log.info("___________________ mainPage - OK");
 
             suiteButton.click();
-            System.out.println("___________________ suiteButton - OK");
+            log.info("___________________ suiteButton - OK");
 
             WebElement createSuiteButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
                     + "/ng-component/div/div/div/div/list-view-toolbar-share/list-view-toolbar-complex/"
                     + "list-view-toolbar/div/div/div[4]/button/span"));
             createSuiteButton.click();
-            System.out.println("___________________ createSuiteButton - OK");
+            log.info("___________________ createSuiteButton - OK");
 
             WebElement createNameSuiteButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
                     + "ng-component/div/div/div[3]/div/div/div[1]/div[1]/div[1]/div/input"));
@@ -122,53 +125,53 @@ public class CreateAndRunSuiteTest {
             if (nameSuite != null && !nameSuite.isEmpty()) {
                 createNameSuiteButton.sendKeys(nameSuite);
             }
-            System.out.println("___________________ nameSuite - OK");
+            log.info("___________________ nameSuite - OK");
 
             WebElement projectListButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
                     + "ng-component/div/div/div[3]/div/div/div[1]/div[2]/div[2]/div"));
             projectListButton.click();
-            System.out.println("___________________ projectListButton - OK");
+            log.info("___________________ projectListButton - OK");
 
             WebElement projectSelectButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
                     +"/ng-component/div/div/div[3]/dialog-select-projects/dm-dialog/div/div/div/div[2]"
                     +"/div/div/div/div/list-view/atr-project[15]/div/md-checkbox/div[1]"));
             projectSelectButton.click();
-            System.out.println("___________________ projectSelectButton - OK");
+            log.info("___________________ projectSelectButton - OK");
 
             WebElement projectSelectApplyButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
                     + "/ng-component/div/div/div[3]/dialog-select-projects/dm-dialog/div/div/div/div[3]"
                     + "/div/div[1]/button"));
             projectSelectApplyButton.click();
-            System.out.println("___________________ projectSelectApplyButton - OK");
+            log.info("___________________ projectSelectApplyButton - OK");
 
             WebElement saveNewSuiteButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
                     + "/ng-component/div/div/div[3]/div/div/div[2]/div/button[1]"));
             saveNewSuiteButton.click();
-            System.out.println("___________________ saveNewSuiteButton - OK");
+            log.info("___________________ saveNewSuiteButton - OK");
 
             suiteNameList.add(nameSuite);
 
             mSleep(2);
         }
 
-        System.out.println("============================ RUN SUITES ==========================");
+        log.info("============================ RUN SUITES ==========================");
         //================================== RUN CREATED SUITES =========================================
         if(suiteNameList.size() > 0) {
             for(int i = 0; i < suiteNameList.size(); i++) {
                 driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));  //   mainPage
-                System.out.println("___________________ mainPage_2 - OK");
+                log.info("___________________ mainPage_2 - OK");
 
                 suiteButton.click();
-                System.out.println("___________________ suiteButton_2 - OK");
+                log.info("___________________ suiteButton_2 - OK");
 
                 WebElement desiredSuite = driver.findElement(By.linkText(suiteNameList.get(i)));
                 desiredSuite.click();
-                System.out.println("___________________ desiredSuite - OK");
+                log.info("___________________ desiredSuite - OK");
 
                 WebElement saveAndRunSuiteButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
                                                        +"/ng-component/div/div/div[3]/div/div/div[2]/div/button[3]"));
                 saveAndRunSuiteButton.click();
-                System.out.println("___________________ saveAndRunSuiteButton - OK");
+                log.info("___________________ saveAndRunSuiteButton - OK");
 
             }
         }
@@ -182,7 +185,7 @@ public class CreateAndRunSuiteTest {
             TimeUnit.SECONDS.sleep(10);
         }
         catch(Exception e) {
-            System.out.println("Exception!");
+            log.info("Exception!");
         }
         WebElement logoutButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]"
                 +"/div/div[5]/div[3]/span"));
