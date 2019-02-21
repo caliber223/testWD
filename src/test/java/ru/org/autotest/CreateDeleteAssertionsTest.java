@@ -253,7 +253,7 @@ public class CreateDeleteAssertionsTest {
         WebElement logoutButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/"
                 +"div/div[5]/div[4]"));
         logoutButton.click();
-        driver.quit();
+      //  driver.quit();
     }
 }
 
