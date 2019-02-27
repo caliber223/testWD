@@ -69,7 +69,7 @@ public class CreateEditDeleteEventsTest {
 
     @Test
     public void userLogin() {
-        log.info("============================ CREATE EVENTS ==========================");
+        log.info("\n\n============================ CREATE EVENTS ==========================");
         int numberEvents = 1;
         int numberExternalEvents = 1;
 
@@ -80,199 +80,326 @@ public class CreateEditDeleteEventsTest {
 
         //================================== AUTHORISATION ====================================================
 
-        WebElement loginField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
-                +"/div/ng-component/div/div/form/div[1]/div/input"));
-        if(login != null && !login.isEmpty()) {
-            loginField.sendKeys(login);
+        try {
+            WebElement loginField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
+                    + "/div/ng-component/div/div/form/div[1]/div/input"));
+            if (login != null && !login.isEmpty()) {
+                loginField.sendKeys(login);
+            }
+        } catch(Exception e) {
+            log.error("Element loginField not found or login == 0 or login is empty");
         }
-        log.info("___________________ login - OK");
 
-        WebElement passwordField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
-                +"/div/ng-component/div/div/form/div[2]/div/input"));
-        if(password != null && !password.isEmpty()) {
-            passwordField.sendKeys(password);
+        try {
+            WebElement passwordField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
+                    + "/div/ng-component/div/div/form/div[2]/div/input"));
+            if (password != null && !password.isEmpty()) {
+                passwordField.sendKeys(password);
+            }
+        } catch(Exception e) {
+            log.error("Element passwordField not found or password == 0 or password is empty");
         }
-        log.info("___________________ password - OK");
 
-        WebElement loginButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
-                +"/div/ng-component/div/div/form/div[3]/div/button"));
-        loginButton.click();
-        log.info("___________________ loginButton - OK");
+        try {
+            WebElement loginButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
+                    + "/div/ng-component/div/div/form/div[3]/div/button"));
+            loginButton.click();
+            log.info("Authorization was successful");
+        } catch(Exception e) {
+            log.error("Element loginButton not found!");
+        }
 
         //==================================== ADD CALENDAR EVENT  =======================================
 
-        WebElement mainPage = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));
-        WebElement libraryButton = driver.findElement(By.xpath("/html/body/app-root/div/div[1]/div[2]"
-                +"/div[1]/div[1]/div[5]/span"));
+        WebElement mainPage;
+        WebElement libraryButton;
         WebElement eventsButton = null;
 
         for(int n = 0; n < numberEvents; n++) {
+            try {
+                mainPage = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));
+                mainPage.click();
+            } catch (Exception e) {
+                log.error("Element mainPage not found!");
+            }
 
-            mainPage.click();
-            log.info("___________________ mainPage - OK");
-
-            libraryButton.click();
-            log.info("___________________ libraryButton - OK");
+            try {
+                libraryButton = driver.findElement(By.xpath("/html/body/app-root/div/div[1]/div[2]"
+                        + "/div[1]/div[1]/div[5]/span"));
+                libraryButton.click();
+            } catch (Exception e) {
+                log.error("Element libraryButton not found!");
+            }
 
             milliSleep(200);
-            eventsButton = driver.findElement(By.xpath("/html/body/app-root/div/div[1]/div[2]/div[2]/div[5]"));
-            eventsButton.click();
-            log.info("___________________ eventsButton - OK");
-
-            WebElement createNewCalendarEvent = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
-                    +"ng-component/div/ng-component/div/div/list-view-toolbar-complex/list-view-toolbar"
-                    +"/div/div/div[4]/button[1]"));
-            createNewCalendarEvent.click();
-            log.info("___________________ createNewCalendarEventButton - OK");
-
-            WebElement createNameEventButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
-                    +"/ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[1]"
-                    +"/div/input"));
-            String nameEvent = new String();
-            nameEvent = "autoTestCalendarEvent_" + n + "_(" + cTime + ")";
-            if (nameEvent != null && !nameEvent.isEmpty()) {
-                createNameEventButton.sendKeys(nameEvent);
+            try {
+                eventsButton = driver.findElement(By.xpath("/html/body/app-root/div/div[1]/div[2]/div[2]/div[5]"));
+                eventsButton.click();
+            } catch(Exception e) {
+                log.error("Element eventsButton not found!");
             }
-            log.info("___________________ nameEvent - OK");
 
-            WebElement alwaysActiveButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
-                    +"ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/"
-                    +"div/div/div[2]/div[1]/md-checkbox/div[1]"));
-            alwaysActiveButton.click();
+            try {
+                WebElement createNewCalendarEvent = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                        + "ng-component/div/ng-component/div/div/list-view-toolbar-complex/list-view-toolbar"
+                        + "/div/div/div[4]/button[1]"));
+                createNewCalendarEvent.click();
+            } catch(Exception e) {
+                log.error("Element createNewCalendarEvent not found!");
+            }
+
+            String nameEvent = null;
+            try {
+                WebElement createNameEventButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
+                        + "/ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[1]"
+                        + "/div/input"));
+                nameEvent = "autoTestCalendarEvent_" + n + "_(" + cTime + ")";
+                if (nameEvent != null && !nameEvent.isEmpty()) {
+                    createNameEventButton.sendKeys(nameEvent);
+                }
+            } catch (Exception e) {
+                log.error("Failed to create events name!");
+            }
+
+            try {
+                WebElement alwaysActiveButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                        + "ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/"
+                        + "div/div/div[2]/div[1]/md-checkbox/div[1]"));
+                alwaysActiveButton.click();
+                milliSleep(delayMilliSec);
+            } catch (Exception e) {
+                log.error("Element alwaysActiveButton not found!");
+            }
+
+            try {
+                WebElement startButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                        + "ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[2]/div[2]"
+                        + "/div[1]/div/md-checkbox/div[1]"));
+                startButton.click();
+                milliSleep(delayMilliSec);
+            } catch (Exception e) {
+                log.error("Element startButton not found!");
+            }
+
+            try {
+                WebElement startField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                        + "ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[2]/"
+                        + "div[2]/div[1]/div/input"));
+                startField.click();
+            } catch (Exception e) {
+                log.error("Element startField not found!");
+            }
+
+            try {
+                WebElement monthButton = driver.findElement(By.xpath("/html/body/bs-datepicker-container/div/div/"
+                        + "div/div/bs-days-calendar-view/bs-calendar-layout/div[1]/"
+                        + "bs-datepicker-navigation-view/button[2]/span"));
+                monthButton.click();
+            } catch (Exception e) {
+                log.error("Element monthButton not found!");
+            }
+
+            try {
+                WebElement monthSelectJune = driver.findElement(By.xpath("/html/body/bs-datepicker-container/div/div/div/"
+                        + "div/bs-month-calendar-view/bs-calendar-layout/div[2]/table/tbody/tr[2]/td[3]/span"));
+                monthSelectJune.click();
+            } catch (Exception e) {
+                log.error("Element monthSelectJune not found!");
+            }
+
+            try {
+                WebElement daySelect10 = driver.findElement(By.xpath("/html/body/bs-datepicker-container/div/div/div/"
+                        + "div/bs-days-calendar-view/bs-calendar-layout/div[2]/table/tbody/tr[3]/td[3]/span"));
+                daySelect10.click();
+            } catch (Exception e) {
+                log.error("Element daySelect10  not found!");
+            }
+
+            try {
+                WebElement hourField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                        + "ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[2]/"
+                        + "div[2]/div[1]/div/timepicker/table/tbody/tr[2]/td[1]/input"));
+                hourField.sendKeys("06");
+            } catch (Exception e) {
+                log.error("Element hourField not found!");
+            }
+
+            try {
+                WebElement minuteField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                        + "ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[2]/"
+                        + "div[2]/div[1]/div/timepicker/table/tbody/tr[2]/td[3]/input"));
+                minuteField.sendKeys("25");
+            } catch (Exception e) {
+                log.error("Element minuteField not found!");
+            }
             milliSleep(delayMilliSec);
 
-            WebElement startButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
-                    +"ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[2]/div[2]"
-                    +"/div[1]/div/md-checkbox/div[1]"));
-            startButton.click();
-            milliSleep(delayMilliSec);
+            try {
+                WebElement endButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/"
+                        + "div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[2]/div[2]/div[2]/"
+                        + "div/md-checkbox/div[1]"));
+                endButton.click();
+            } catch (Exception e) {
+                log.error("Element endButton not found!");
+            }
 
-            WebElement startField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
-                    +"ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[2]/"
-                    +"div[2]/div[1]/div/input"));
-            startField.click();
+            try {
+                WebElement endField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/"
+                        + "div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[2]/"
+                        + "div[2]/div[2]/div/input"));
+                endField.click();
+            } catch (Exception e) {
+                log.error("Element endField not found!");
+            }
 
-            WebElement monthButton = driver.findElement(By.xpath("/html/body/bs-datepicker-container/div/div/"
-                    +"div/div/bs-days-calendar-view/bs-calendar-layout/div[1]/"
-                    +"bs-datepicker-navigation-view/button[2]/span"));
-            monthButton.click();
+            try {
+                WebElement month2Button = driver.findElement(By.xpath("/html/body/bs-datepicker-container/div/div/div"
+                        + "/div/bs-days-calendar-view/bs-calendar-layout/div[1]/"
+                        + "bs-datepicker-navigation-view/button[2]/span"));
+                month2Button.click();
+            } catch (Exception e) {
+                log.error("Element month2Button not found");
+            }
 
-            WebElement monthSelectJune = driver.findElement(By.xpath("/html/body/bs-datepicker-container/div/div/div/"
-                    +"div/bs-month-calendar-view/bs-calendar-layout/div[2]/table/tbody/tr[2]/td[3]/span"));
-            monthSelectJune.click();
+            try {
+                WebElement month2SelectAugust = driver.findElement(By.xpath("/html/body/bs-datepicker-container/div/div/"
+                        + "div/div/bs-month-calendar-view/bs- calendar-layout/div[2]/table/tbody/tr[3]/td[2]/span"));
+                month2SelectAugust.click();
+            } catch (Exception e) {
+                log.error("Element month2SelectAugust not found!");
+            }
 
-            WebElement daySelect10 = driver.findElement(By.xpath("/html/body/bs-datepicker-container/div/div/div/"
-                    +"div/bs-days-calendar-view/bs-calendar-layout/div[2]/table/tbody/tr[3]/td[3]/span"));
-            daySelect10.click();
+            try {
+                WebElement day2Select20 = driver.findElement(By.xpath("/html/body/bs-datepicker-container/div/div/div/"
+                        + "div/bs-days-calendar-view/bs-calendar-layout/div[2]/table/tbody/tr[4]/td[5]"));
+                day2Select20.click();
+            } catch (Exception e) {
+                log.error("Element day2Select20");
+            }
 
-            WebElement hourField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
-                    +"ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[2]/"
-                    +"div[2]/div[1]/div/timepicker/table/tbody/tr[2]/td[1]/input"));
-            hourField.sendKeys("06");
+            try {
+                WebElement hour2Field = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/"
+                        + "div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[2]/div[2]/div[2]/"
+                        + "div/timepicker/table/tbody/tr[2]/td[1]/input"));
+                hour2Field.sendKeys("11");
+            } catch (Exception e) {
+                log.error("Element hour2Field not found!");
+            }
 
-            WebElement minuteField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
-                    +"ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[2]/"
-                    +"div[2]/div[1]/div/timepicker/table/tbody/tr[2]/td[3]/input"));
-            minuteField.sendKeys("25");
-            milliSleep(delayMilliSec);
+            try {
+                WebElement minute2Field = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                        + "ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[2]/div[2]/"
+                        + "div[2]/div/timepicker/table/tbody/tr[2]/td[3]/input"));
+                minute2Field.sendKeys("15");
+            } catch (Exception e) {
+                log.error("Element minute2Field not found!");
+            }
 
-            WebElement endButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/"
-                    +"div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[2]/div[2]/div[2]/"
-                    +"div/md-checkbox/div[1]"));
-            endButton.click();
+            try {
+                WebElement everyHour = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                        + "ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[3]/div/"
+                        + "trigger-edit/div/div[1]/div[2]"));
+                everyHour.click();
+            } catch (Exception e) {
+                log.error("Element everyHour not found!");
+            }
 
-            WebElement endField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/"
-                    +"div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[2]/"
-                    +"div[2]/div[2]/div/input"));
-            endField.click();
+            try {
+                WebElement triggerMinute = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                        + "ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[3]/div/"
+                        + "trigger-edit/div/div[3]/div[1]/input"));
+                triggerMinute.sendKeys("50");   //  50 minutes
+            } catch (Exception e) {
+                log.error("Element triggerMinute not found!");
+            }
 
-            WebElement month2Button = driver.findElement(By.xpath("/html/body/bs-datepicker-container/div/div/div"
-                    +"/div/bs-days-calendar-view/bs-calendar-layout/div[1]/"
-                    +"bs-datepicker-navigation-view/button[2]/span"));
-            month2Button.click();
+            try {
+                WebElement triggerHour = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/"
+                        + "div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[3]/div/trigger-edit/"
+                        + "div/div[3]/div[2]/table/tbody/tr[2]/td[5]"));
+                triggerHour.click();    // 10 hours
+            }catch (Exception e) {
+                log.error("Element triggerHour not found!");
+            }
 
-            WebElement month2SelectAugust = driver.findElement(By.xpath("/html/body/bs-datepicker-container/div/div/"
-                    +"div/div/bs-month-calendar-view/bs-calendar-layout/div[2]/table/tbody/tr[3]/td[2]/span"));
-            month2SelectAugust.click();
+            try {
+                WebElement triggerDay10 = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                        + "ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[3]/div/"
+                        + "trigger-edit/div/div[3]/div[3]/table/tbody/tr[2]/td[2]"));
+                WebElement triggerDay15 = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                        + "ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[3]/div/"
+                        + "trigger-edit/div/div[3]/div[3]/table/tbody/tr[2]/td[7]"));
+                WebElement triggerDay20 = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                        + "ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[3]/div/"
+                        + "trigger-edit/div/div[3]/div[3]/table/tbody/tr[3]/td[4]"));
+                triggerDay10.click();
+                triggerDay15.click();
+                triggerDay20.click();
+            } catch (Exception e) {
+                log.error("Failed to set triggers days");
+            }
 
-            WebElement day2Select20 = driver.findElement(By.xpath("/html/body/bs-datepicker-container/div/div/div/"
-                    +"div/bs-days-calendar-view/bs-calendar-layout/div[2]/table/tbody/tr[4]/td[5]"));
-            day2Select20.click();
+            try {
+                WebElement triggerMonthJune = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                        + "ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[3]/div/"
+                        + "trigger-edit/div/div[3]/div[4]/table/tbody/tr[2]/td[2]"));
+                WebElement triggerMonthJule = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                        + "ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[3]/div/"
+                        + "trigger-edit/div/div[3]/div[4]/table/tbody/tr[2]/td[3]"));
+                WebElement triggerMonthAugust = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                        + "ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[3]/div/"
+                        + "trigger-edit/div/div[3]/div[4]/table/tbody/tr[2]/td[4]"));
+                triggerMonthJune.click();
+                triggerMonthJule.click();
+                triggerMonthAugust.click();
+            } catch (Exception e) {
+                log.error("Failed to set triggers months");
+            }
 
-            WebElement hour2Field = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/"
-                    +"div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[2]/div[2]/div[2]/"
-                    +"div/timepicker/table/tbody/tr[2]/td[1]/input"));
-            hour2Field.sendKeys("11");
+            try {
+                WebElement addAction = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                        + "ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[4]/"
+                        + "label/button"));
+                addAction.click();
+            } catch (Exception e) {
+                log.error("Element addAction not found!");
+            }
 
-            WebElement minute2Field = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
-                    +"ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[2]/div[2]/"
-                    +"div[2]/div/timepicker/table/tbody/tr[2]/td[3]/input"));
-            minute2Field.sendKeys("15");
 
+            try {
+                List<WebElement> actionsList = driver.findElements(By.tagName("event-action"));
+                log.debug("____________________ size of actionsList = " + actionsList.size());
+            } catch (Exception e) {
+                log.error("Element actionsList not found!");
+            }
 
-            WebElement everyHour = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
-                    +"ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[3]/div/"
-                    +"trigger-edit/div/div[1]/div[2]"));
-            everyHour.click();
+            try {
+                WebElement selectAction = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                        + "ng-component/div/ng-component/dialog-event/dialog-select-actions/dm-dialog/div/div/div/div[2]"
+                        + "/div/div/div/list-view/event-action[3]/atr-suite/div/md-checkbox/div[1]"));
+                selectAction.click();
+            } catch (Exception e) {
+                log.error("Element selectActions not found!");
+            }
 
-            WebElement triggerMinute = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
-                    +"ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[3]/div/"
-                    +"trigger-edit/div/div[3]/div[1]/input"));
-            triggerMinute.sendKeys("50");   //  50 minutes
+            try {
+                WebElement addActionApply = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                        + "ng-component/div/ng-component/dialog-event/dialog-select-actions/dm-dialog/div/div/div/div[3]/"
+                        + "div/div[1]/button"));
+                addActionApply.click();
+            } catch (Exception e) {
+                log.error("Element addActionApply not found!");
+            }
 
-            WebElement triggerHour = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/"
-                    +"div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[3]/div/trigger-edit/"
-                    +"div/div[3]/div[2]/table/tbody/tr[2]/td[5]"));
-            triggerHour.click();    // 10 hours
+            try {
+                WebElement saveNewCalendarEventButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                        + "ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[3]/div/div[1]/button"));
+                saveNewCalendarEventButton.click();
+            } catch (Exception e) {
+                log.error("Element saveNewCalendarEventButton not found!");
+            }
 
-            WebElement triggerDay10 = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
-                    +"ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[3]/div/"
-                    +"trigger-edit/div/div[3]/div[3]/table/tbody/tr[2]/td[2]"));
-            WebElement triggerDay15 = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
-                    +"ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[3]/div/"
-                    +"trigger-edit/div/div[3]/div[3]/table/tbody/tr[2]/td[7]"));
-            WebElement triggerDay20 = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
-                    +"ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[3]/div/"
-                    +"trigger-edit/div/div[3]/div[3]/table/tbody/tr[3]/td[4]"));
-            triggerDay10.click();
-            triggerDay15.click();
-            triggerDay20.click();
-
-            WebElement triggerMonthJune   = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
-                    +"ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[3]/div/"
-                    +"trigger-edit/div/div[3]/div[4]/table/tbody/tr[2]/td[2]"));
-            WebElement triggerMonthJule   = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
-                    +"ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[3]/div/"
-                    +"trigger-edit/div/div[3]/div[4]/table/tbody/tr[2]/td[3]"));
-            WebElement triggerMonthAugust = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
-                    +"ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[3]/div/"
-                    +"trigger-edit/div/div[3]/div[4]/table/tbody/tr[2]/td[4]"));
-            triggerMonthJune.click();
-            triggerMonthJule.click();
-            triggerMonthAugust.click();
-
-            WebElement addAction = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
-                    +"ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[2]/div/div/div[4]/"
-                    +"label/button"));
-            addAction.click();
-
-            List<WebElement> actionsList = driver.findElements(By.tagName("event-action"));
-            log.debug("____________________ size of actionsList = " + actionsList.size());
-
-            WebElement selectAction = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
-                    +"ng-component/div/ng-component/dialog-event/dialog-select-actions/dm-dialog/div/div/div/div[2]"
-                    +"/div/div/div/list-view/event-action[3]/atr-suite/div/md-checkbox/div[1]"));
-            selectAction.click();
-
-            WebElement addActionApply = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
-                    +"ng-component/div/ng-component/dialog-event/dialog-select-actions/dm-dialog/div/div/div/div[3]/"
-                    +"div/div[1]/button"));
-            addActionApply.click();
-
-            WebElement saveNewCalendarEventButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
-                    +"ng-component/div/ng-component/dialog-event/dm-dialog/div/div/div/div[3]/div/div[1]/button"));
-            saveNewCalendarEventButton.click();
-            log.info("___________________ saveNewEventButton - OK");
+            log.info("___________________ Calendar event creation was successful!");
 
             eventNameList.add(nameEvent);
 
@@ -282,50 +409,90 @@ public class CreateEditDeleteEventsTest {
         //======================================== ADD EXTERNAL EVENT ======================================
 
         for (int m = 0; m < numberExternalEvents; ++m) {
-            mainPage.click();
-            milliSleep(delayMilliSec);
-            libraryButton.click();
-            milliSleep(delayMilliSec);
-            eventsButton = driver.findElement(By.xpath("/html/body/app-root/div/div[1]/div[2]/div[2]/div[5]"));
-            eventsButton.click();
-            milliSleep(delayMilliSec);
-
-            WebElement createExternalEvent = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
-                    +"/ng-component/div/ng-component/div/div/list-view-toolbar-complex/list-view-toolbar/div/"
-                    +"div/div[4]/button[2]"));
-            createExternalEvent.click();
-            milliSleep(delayMilliSec);
-
-            WebElement createNameExternalEvent = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
-                    +"ng-component/div/ng-component/dialog-external-event/dm-dialog/div/div/div/div[2]/"
-                    +"div/div/div/div/div[1]/div/input"));
-            String nameExternalEvent = new String();
-            nameExternalEvent = "autoTestExternalEvent_" + m + "_(" + cTime + ")";
-            if (nameExternalEvent != null && !nameExternalEvent.isEmpty()) {
-                createNameExternalEvent.sendKeys(nameExternalEvent);
+            try {
+                mainPage = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));
+                mainPage.click();
+                milliSleep(delayMilliSec);
+            } catch (Exception e) {
+                log.error("Element mainPage not found! (external events)");
             }
-            milliSleep(delayMilliSec);
 
-            WebElement templateField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
-                    +"ng-component/div/ng-component/dialog-external-event/dm-dialog/div/div/div/div[2]"
-                    +"/div/div/div/div/div[2]/select"));
-            templateField.click();
-            milliSleep(delayMilliSec);
+            try {
+                libraryButton = driver.findElement(By.xpath("/html/body/app-root/div/div[1]/div[2]"
+                        + "/div[1]/div[1]/div[5]/span"));
+                libraryButton.click();
+                milliSleep(delayMilliSec);
+            } catch (Exception e) {
+                log.error("Element libraryButton not found! (external events)");
+            }
 
-            WebElement selectTemplate = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
-                    +"ng-component/div/ng-component/dialog-external-event/dm-dialog/div/div/div/div[2]/"
-                    +"div/div/div/div/div[2]/select/option[3]"));
-            selectTemplate.click();
-            milliSleep(delayMilliSec);
+            try {
+                eventsButton = driver.findElement(By.xpath("/html/body/app-root/div/div[1]/div[2]/div[2]/div[5]"));
+                eventsButton.click();
+                milliSleep(delayMilliSec);
+            } catch (Exception e) {
+                log.error("Element eventsButton not found! (external events)");
+            }
 
-            WebElement saveExternalEventButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
-                    +"/ng-component/div/ng-component/dialog-external-event/dm-dialog/div/div/div/div[3]/"
-                    +"div/div[1]/button"));
-            saveExternalEventButton.click();
-            milliSleep(delayMilliSec);
-            log.info("___________________ saveNewExternalEvent - OK");
+            try {
+                WebElement createExternalEvent = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
+                        + "/ng-component/div/ng-component/div/div/list-view-toolbar-complex/list-view-toolbar/div/"
+                        + "div/div[4]/button[2]"));
+                createExternalEvent.click();
+                milliSleep(delayMilliSec);
+            } catch (Exception e) {
+                log.error("Element createExternalEvent not found! (external events)");
+            }
+
+            String nameExternalEvent = new String();
+            try {
+                WebElement createNameExternalEvent = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                        + "ng-component/div/ng-component/dialog-external-event/dm-dialog/div/div/div/div[2]/"
+                        + "div/div/div/div/div[1]/div/input"));
+                nameExternalEvent = "autoTestExternalEvent_" + m + "_(" + cTime + ")";
+                if (nameExternalEvent != null && !nameExternalEvent.isEmpty()) {
+                    createNameExternalEvent.sendKeys(nameExternalEvent);
+                }
+                milliSleep(delayMilliSec);
+            } catch (Exception e) {
+                log.error("Element createNameExternalEvent not found! (external events)");
+            }
+
+            try {
+                WebElement templateField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                        + "ng-component/div/ng-component/dialog-external-event/dm-dialog/div/div/div/div[2]"
+                        + "/div/div/div/div/div[2]/select"));
+                templateField.click();
+                milliSleep(delayMilliSec);
+            } catch (Exception e) {
+                log.error("Element templateField not found! (external events)");
+            }
+
+            try {
+                WebElement selectTemplate = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                        + "ng-component/div/ng-component/dialog-external-event/dm-dialog/div/div/div/div[2]/"
+                        + "div/div/div/div/div[2]/select/option[3]"));
+                selectTemplate.click();
+                milliSleep(delayMilliSec);
+            } catch (Exception e) {
+                log.error("Element selectTemplate not found! (external events)");
+            }
+
+            try {
+                WebElement saveExternalEventButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
+                        + "/ng-component/div/ng-component/dialog-external-event/dm-dialog/div/div/div/div[3]/"
+                        + "div/div[1]/button"));
+                saveExternalEventButton.click();
+                milliSleep(delayMilliSec);
+            } catch (Exception e) {
+                log.error("Element saveExternalEventButton not found! (external events)");
+            }
+
+            log.info("___________________ External event creation was successful!");
+
             eventNameList.add(nameExternalEvent);
-            log.info("___________________ eventNameList.size = " + eventNameList.size());
+
+            log.debug("___________________ eventNameList.size = " + eventNameList.size());
             mSleep(2);
         }
         //===================================================================================================
@@ -335,14 +502,25 @@ public class CreateEditDeleteEventsTest {
         if(eventNameList.size() > 0) {
             TypeEvent typeEvent = TypeEvent.UNDEFINED;
             for(int i = 0; i < eventNameList.size(); i++) {
-                driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));  //  mainPage
-                log.info("___________________ mainPage_2 - OK");
+                try {
+                    driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));  //  mainPage
+                } catch (Exception e) {
+                    log.error("Element mainPage not found! (delete events)");
+                }
 
-                libraryButton.click();
-                log.info("___________________ libraryButton_2 - OK");
+                try {
+                    libraryButton = driver.findElement(By.xpath("/html/body/app-root/div/div[1]/div[2]"
+                            + "/div[1]/div[1]/div[5]/span"));
+                    libraryButton.click();
+                } catch (Exception e) {
+                    log.error("Element libraryButton not found! (delete events)");
+                }
 
-                eventsButton.click();
-                log.info("___________________ eventsButton_2 - OK");
+                try {
+                    eventsButton.click();
+                } catch (Exception e) {
+                    log.error("Element eventButton not found! (delete events)");
+                }
 
                 //============================== DELETE CALENDAR EVENTS ===================================
                 List<WebElement> listEvents = driver.findElements(By.tagName("calendar-event"));
@@ -364,23 +542,35 @@ public class CreateEditDeleteEventsTest {
                         if(atrib.equals(eventNameList.get(i))) {
                             typeEvent = TypeEvent.CALENDAR;
                             log.info("___________________ This event is CALENDAR type!!!");
-                            temp.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/div/"
-                                    + "ng-component/div/div/div/div/list-view/calendar-event[" + (k + 1) + "]"));
-                            milliSleep(delayMilliSec);
+                            try {
+                                temp.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/div/"
+                                        + "ng-component/div/div/div/div/list-view/calendar-event[" + (k + 1) + "]"));
+                                milliSleep(delayMilliSec);
+                            }catch (Exception e) {
+                                log.error("Element temp not found! (delete calendar events)");
+                            }
 
-                            WebElement eventDeleteButton = driver.findElement(By.xpath("/html/body/app-root/div/"
-                                    + "div[2]/div[2]/ng-component/div/ng-component/div/div/div/div/list-view/"
-                                    + "calendar-event[" + (k + 1) + "]/div/div[3]/div[1]/div[4]/button[1]"));
-                            eventDeleteButton.click();
-                            milliSleep(delayMilliSec);
+                            try {
+                                WebElement eventDeleteButton = driver.findElement(By.xpath("/html/body/app-root/div/"
+                                        + "div[2]/div[2]/ng-component/div/ng-component/div/div/div/div/list-view/"
+                                        + "calendar-event[" + (k + 1) + "]/div/div[3]/div[1]/div[4]/button[1]"));
+                                eventDeleteButton.click();
+                                milliSleep(delayMilliSec);
+                            } catch (Exception e) {
+                                log.error("Element eventDeleteButton not found! (delete calendar events)");
+                            }
 
-                            WebElement eventDeleteApplyButton = driver.findElement(By.xpath("/html/body/app-root/"
-                                    +"div/div[2]/div[2]/ng-component/div/dialogs-list/div/div/content-dialog/"
-                                    +"div/div[1]/div/div[3]/button"));
-                            eventDeleteApplyButton.click();
-                            milliSleep(delayMilliSec);
+                            try {
+                                WebElement eventDeleteApplyButton = driver.findElement(By.xpath("/html/body/app-root/"
+                                        + "div/div[2]/div[2]/ng-component/div/dialogs-list/div/div/content-dialog/"
+                                        + "div/div[1]/div/div[3]/button"));
+                                eventDeleteApplyButton.click();
+                                milliSleep(delayMilliSec);
+                            } catch (Exception e) {
+                                log.error("Element eventDeleteApplyButton not found! (delete calendar events)");
+                            }
 
-                            log.info("___________________ calender event has been deleted successfully! -OK");
+                            log.info("Calendar event " + atrib + " has been deleted successfully!");
                             break;
                         }
                     }
@@ -404,23 +594,35 @@ public class CreateEditDeleteEventsTest {
                         if(atrib.equals(eventNameList.get(i))) {
                             typeEvent = TypeEvent.EXTERNAL;
                             log.info("___________________ This event is EXTERNAL type!!!");
-                            temp.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/div/"
-                                    +"ng-component/div/div/div/div/list-view/external-event[" + (l + 1) + "]"));
-                            milliSleep(delayMilliSec);
+                            try {
+                                temp.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/div/"
+                                        + "ng-component/div/div/div/div/list-view/external-event[" + (l + 1) + "]"));
+                                milliSleep(delayMilliSec);
+                            }catch (Exception e) {
+                                log.error("Element temp not found! (delete external event)");
+                            }
 
-                            WebElement externalEventDeleteButton = driver.findElement(By.xpath("/html/body/app-root/"
-                                    +"div/div[2]/div[2]/ng-component/div/ng-component/div/div/div/div/list-view/"
-                                    +"external-event[" + (l + 1) + "]/div/div[3]/div[1]/div[4]/button[1]"));
-                            externalEventDeleteButton.click();
-                            milliSleep(delayMilliSec);
+                            try {
+                                WebElement externalEventDeleteButton = driver.findElement(By.xpath("/html/body/app-root/"
+                                        + "div/div[2]/div[2]/ng-component/div/ng-component/div/div/div/div/list-view/"
+                                        + "external-event[" + (l + 1) + "]/div/div[3]/div[1]/div[4]/button[1]"));
+                                externalEventDeleteButton.click();
+                                milliSleep(delayMilliSec);
+                            } catch (Exception e) {
+                                log.error("Element externalEventDeleteButton not found! (delete external events)");
+                            }
 
-                            WebElement externalEventDeleteApplyButton = driver.findElement(By.xpath("/html/body/"
-                                    +"app-root/div/div[2]/div[2]/ng-component/div/dialogs-list/div/div/"
-                                    +"content-dialog/div/div[1]/div/div[3]/button"));
-                            externalEventDeleteApplyButton.click();
-                            milliSleep(delayMilliSec);
+                            try {
+                                WebElement externalEventDeleteApplyButton = driver.findElement(By.xpath("/html/body/"
+                                        + "app-root/div/div[2]/div[2]/ng-component/div/dialogs-list/div/div/"
+                                        + "content-dialog/div/div[1]/div/div[3]/button"));
+                                externalEventDeleteApplyButton.click();
+                                milliSleep(delayMilliSec);
+                            } catch (Exception e) {
+                                log.error("Element externalEventDeleteApplyButton not found!");
+                            }
 
-                            log.info("___________________ external event has been deleted successfully! -OK");
+                            log.info("External event " + atrib + " has been deleted successfully!");
                             break;
                         }
                     }
@@ -431,22 +633,32 @@ public class CreateEditDeleteEventsTest {
             }
         }
         //==================================================================================================
-        driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));
-        log.info("___________________ main page 2 - OK");
+        try {
+            driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));
+        } catch (Exception e) {
+            log.error("Element mainPage not found!");
+        }
 
     }
 
     @AfterClass
     public static void tearDown() {
         mSleep(5);
-        WebElement titleField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));
-        titleField.click();
-        log.info("___________________ title field for exit - OK");
+        try {
+            WebElement titleField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));
+            titleField.click();
+        } catch (Exception e) {
+            log.error("Element titleField not found! (tearDown())");
+        }
 
-        WebElement logoutButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div/"
-                +"div[5]/div[4]"));
-        logoutButton.click();
-        log.info("___________________ logoutButton click - OK");
+        try {
+            WebElement logoutButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div/"
+                    + "div[5]/div[4]"));
+            logoutButton.click();
+        } catch (Exception e) {
+            log.error("Element logoutButton not found! (tearDown())");
+        }
+
         driver.quit();
     }
 }

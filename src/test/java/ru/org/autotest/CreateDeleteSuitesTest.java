@@ -4,7 +4,6 @@ import java.util.Date;
 import java.io.File;
 import java.util.*;
 import org.junit.AfterClass;
-import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -81,35 +80,49 @@ public class CreateDeleteSuitesTest {
 
         //================================== CREATE SUITE ====================================================
 
-        WebElement loginField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
-                                                            +"/div/ng-component/div/div/form/div[1]/div/input"));
-        if(login != null && !login.isEmpty()) {
-            loginField.sendKeys(login);
+        try {
+            WebElement loginField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
+                    + "/div/ng-component/div/div/form/div[1]/div/input"));
+            if (login != null && !login.isEmpty()) {
+                loginField.sendKeys(login);
+            }
+        } catch(Exception e) {
+            log.error("Element loginField not found!");
         }
-        log.info("___________________ login - OK");
 
-        WebElement passwordField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
-                                                               +"/div/ng-component/div/div/form/div[2]/div/input"));
-        if(password != null && !password.isEmpty()) {
-            passwordField.sendKeys(password);
+        try {
+            WebElement passwordField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
+                    + "/div/ng-component/div/div/form/div[2]/div/input"));
+            if (password != null && !password.isEmpty()) {
+                passwordField.sendKeys(password);
+            }
+        } catch (Exception e) {
+            log.error("Element passwordField not found!");
         }
-        log.info("___________________ password - OK");
 
-        WebElement loginButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
-                                                            +"/div/ng-component/div/div/form/div[3]/div/button"));
-        loginButton.click();
-        milliSleep(delayMilliSec);
-        log.info("___________________ loginButton - OK");
+        try {
+            WebElement loginButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
+                    + "/div/ng-component/div/div/form/div[3]/div/button"));
+            loginButton.click();
+            milliSleep(delayMilliSec);
+        } catch (Exception e) {
+            log.error("Element loginButton not found!");
+        }
 
-        WebElement mainPage = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));
-        WebElement suiteButton = driver.findElement(By.xpath("/html/body/app-root/div/div[1]"
-                + "/div[2]/div/div[1]/div[3]/span"));
+        WebElement mainPage;
+        WebElement suiteButton;
 
         for(int n = 0; n < numberSuites; n++) {
 
-            mainPage.click();
-            log.info("___________________ mainPage - OK");
+            try {
+                mainPage = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));
+                mainPage.click();
+            } catch (Exception e) {
+                log.error("Element mainPage not found!");
+            }
 
+            suiteButton = driver.findElement(By.xpath("/html/body/app-root/div/div[1]"
+                              + "/div[2]/div/div[1]/div[3]/span"));
             suiteButton.click();
             log.info("___________________ suiteButton - OK");
 
@@ -265,6 +278,8 @@ public class CreateDeleteSuitesTest {
                 driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));  //  mainPage
                 log.info("___________________ mainPage_2 - OK");
 
+                suiteButton = driver.findElement(By.xpath("/html/body/app-root/div/div[1]"
+                                  + "/div[2]/div/div[1]/div[3]/span"));
                 suiteButton.click();
                 log.info("___________________ suiteButton_2 - OK");
 

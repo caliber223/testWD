@@ -78,70 +78,98 @@ public class NewDashboardTest {
         log.info("");
         log.info("____________________ DASHBOARD TEST START ____________________");
 
-        WebElement loginField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
-                                                           +"/div/ng-component/div/div/form/div[1]/div/input"));
-        if(login != null && !login.isEmpty()) {
-            loginField.sendKeys(login);
+        try {
+            WebElement loginField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
+                    + "/div/ng-component/div/div/form/div[1]/div/input"));
+            if (login != null && !login.isEmpty()) {
+                loginField.sendKeys(login);
+            }
+        } catch (Exception e) {
+            log.error("Element loginField not found!");
         }
-        log.info("___________________ login - OK");
 
-        WebElement passwordField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div/"
-                                                                    +"ng-component/div/div/form/div[2]/div/input"));
-        if(password != null && !password.isEmpty()) {
-            passwordField.sendKeys(password);
+        try {
+            WebElement passwordField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div/"
+                    + "ng-component/div/div/form/div[2]/div/input"));
+            if (password != null && !password.isEmpty()) {
+                passwordField.sendKeys(password);
+            }
+        } catch (Exception e) {
+            log.error("Element passwordField not found!");
         }
-        log.info("___________________ password - OK");
 
-        WebElement loginButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
-                                                          +"/div/ng-component/div/div/form/div[3]/div/button"));
-        loginButton.click();
-        log.info("___________________ loginButton - OK");
+        try {
+            WebElement loginButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
+                    + "/div/ng-component/div/div/form/div[3]/div/button"));
+            loginButton.click();
+        } catch (Exception e) {
+            log.error("Element loginButton not found!");
+        }
 
-        WebElement mainPage = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));
-        mainPage.click();
-        log.info("___________________ mainPage - OK");
+        try {
+            WebElement mainPage = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));
+            mainPage.click();
+        } catch (Exception e) {
+            log.error("Element mainPage not found!");
+        }
 
-        WebElement dashboardButton = driver.findElement(By.xpath("/html/body/app-root/div/div[1]/div[2]"
-                                                                +"/div/div[1]/div[1]/span"));
-        dashboardButton.click();
-        log.info("___________________ dashboardButton - OK");
+        try {
+            WebElement dashboardButton = driver.findElement(By.xpath("/html/body/app-root/div/div[1]/div[2]"
+                    + "/div/div[1]/div[1]/span"));
+            dashboardButton.click();
+        } catch (Exception e) {
+            log.error("Element dashboardButton not found!");
+        }
 
-        List<WebElement> widgetsList = driver.findElements(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
-                +"ng-component/div/div"));
-        log.debug("widgetList size = " + widgetsList.size());
+        try {
+            List<WebElement> widgetsList = driver.findElements(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                    + "ng-component/div/div"));
+            log.debug("widgetList size = " + widgetsList.size());
+        } catch (Exception e) {
+            log.error("Element widgetList not found!");
+        }
 
-        WebElement addGroupButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
-                                                                  +"/ng-component/div/div/button"));
-        addGroupButton.click();
-        log.info("___________________ addGroupButton - OK");
+        try {
+            WebElement addGroupButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
+                    + "/ng-component/div/div/button"));
+            addGroupButton.click();
+        } catch (Exception e) {
+            log.error("Element addGroupButton not found!");
+        }
         milliSleep(delayMilliSec);
 
-        WebElement groupNameField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
-                +"ng-component/div/div/div[2]/div[2]/input[1]"));
-        String groupName = new String();
-        groupName = "autoTestGroup(" + cTime + ")";
-        groupNameField.sendKeys(groupName);
-        log.info("___________________ groupNameField - OK");
+        try {
+            WebElement groupNameField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                    + "ng-component/div/div/div[2]/div[2]/input[1]"));
+            String groupName = new String();
+            groupName = "autoTestGroup(" + cTime + ")";
+            groupNameField.sendKeys(groupName);
+        } catch (Exception e) {
+            log.error("Element groupNameField not found");
+        }
         milliSleep(delayMilliSec);
 
-      /*  WebElement addWidgetButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
-                +"ng-component/div/div/div[2]/div[2]/button[1]"));
-        addWidgetButton.click();
-        log.info("___________________ addWidgetButton - OK");*/
-
-        WebElement saveGroupButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
-                +"ng-component/div/div/div[2]/div[2]/div[2]"));
-        saveGroupButton.click();
-        log.info("___________________ saveGroupButton - OK");
+        try {
+            WebElement saveGroupButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                    + "ng-component/div/div/div[2]/div[2]/div[2]"));
+            saveGroupButton.click();
+        } catch (Exception e) {
+            log.error("Element saveGroupButton not found!");
+        }
 
     }
 
     @AfterClass
     public static void tearDown() {
         mSleep(2);
-        WebElement logoutButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div/"
-                +"div[5]/div[4]"));
-        logoutButton.click();
+        try {
+            WebElement logoutButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div/"
+                    + "div[5]/div[4]"));
+            logoutButton.click();
+        } catch (Exception e) {
+            log.error("Element logoutButton not found!");
+        }
+
         driver.quit();
     }
 
