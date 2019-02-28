@@ -7,6 +7,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -121,101 +122,147 @@ public class CreateDeleteSuitesTest {
                 log.error("Element mainPage not found!");
             }
 
-            suiteButton = driver.findElement(By.xpath("/html/body/app-root/div/div[1]"
-                              + "/div[2]/div/div[1]/div[3]/span"));
-            suiteButton.click();
-            log.info("___________________ suiteButton - OK");
-
-            WebElement createSuiteButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
-                    + "/ng-component/div/div/div/div/list-view-toolbar-share/list-view-toolbar-complex/"
-                    + "list-view-toolbar/div/div/div[4]/button/span"));
-
-            createSuiteButton.click();
-            log.info("___________________ createSuiteButton - OK");
-
-            WebElement createNameSuiteButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
-                    + "ng-component/div/div/div[3]/div/div/div[1]/div[1]/div[1]/div/input"));
-            String nameSuite = new String();
-            nameSuite = "autoTestSuite_" + n + "_(" + cTime + ")";
-            if (nameSuite != null && !nameSuite.isEmpty()) {
-                createNameSuiteButton.sendKeys(nameSuite);
+            try {
+                suiteButton = driver.findElement(By.xpath("/html/body/app-root/div/div[1]"
+                        + "/div[2]/div/div[1]/div[3]/span"));
+                suiteButton.click();
+            } catch (Exception e) {
+                log.error("Element suiteButton not found!");
             }
-            log.info("___________________ nameSuite - OK");
 
-            WebElement note = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/"
+            try {
+                WebElement createSuiteButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
+                        + "/ng-component/div/div/div/div/list-view-toolbar-share/list-view-toolbar-complex/"
+                        + "list-view-toolbar/div/div/div[4]/button/span"));
+                createSuiteButton.click();
+            } catch (Exception e) {
+                log.error("Element createSueteDutton");
+            }
+
+            String nameSuite = "autoTestSuite_" + n + "_(" + cTime + ")";
+            try {
+                WebElement createNameSuiteButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                        + "ng-component/div/div/div[3]/div/div/div[1]/div[1]/div[1]/div/input"));
+                nameSuite = "autoTestSuite_" + n + "_(" + cTime + ")";
+                if (nameSuite != null && !nameSuite.isEmpty()) {
+                    createNameSuiteButton.sendKeys(nameSuite);
+                }
+            } catch (Exception e) {
+                    log.error("Element createNameSuiteButton");
+            }
+
+            try  {WebElement note = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/"
                     +"div/div/div[3]/div/div/div[1]/div[1]/div[2]/div/textarea"));
-            note.clear();
-            note.sendKeys("Note for " + nameSuite);
-            log.info("___________________ new Note - OK");
+                note.clear();
+                 note.sendKeys("Note for " + nameSuite);
+                 } catch (Exception e) {
+                log.error("Element note not found");
+            }
 
-            WebElement lifeTime = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/"
-                    +"div/div/div[3]/div/div/div[1]/div[1]/div[3]/div/input"));
-            lifeTime.clear();
-            lifeTime.sendKeys("12");
-            log.info("___________________ lifeTime - OK");
+            try {
+                WebElement lifeTime = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/"
+                        + "div/div/div[3]/div/div/div[1]/div[1]/div[3]/div/input"));
+                lifeTime.clear();
+                lifeTime.sendKeys("12");
+            } catch (Exception e) {
+                log.info("Element lifeTime not found!");
+            }
 
             //---------------------------------- ADD NEW TAGS ----------------------------------------------------
 
-            WebElement tagsButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
-                    +"ng-component/div/div/div[3]/div/div/div[1]/div[1]/div[4]/div/button"));
-            tagsButton.click();
-            log.info("___________________ tagsButton - OK");
+            try {
+                WebElement tagsButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                        + "ng-component/div/div/div[3]/div/div/div[1]/div[1]/div[4]/div/button"));
+                tagsButton.click();
+            } catch (Exception e) {
+                log.error("Element tagsButton not found!");
+            }
 
-            WebElement newRootTagButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
-                    +"/ng-component/div/div/div[3]/dialog-tags-select/dm-dialog/div/div/div/div[1]/button[1]"));
-            newRootTagButton.click();
-            log.info("___________________ newRootTagButton - OK");
+            try {
+                WebElement newRootTagButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
+                        + "/ng-component/div/div/div[3]/dialog-tags-select/dm-dialog/div/div/div/div[1]/button[1]"));
+                newRootTagButton.click();
+            } catch (Exception e) {
+                log.error("Element newRootTagButton not found!");
+            }
 
-            WebElement newTagSpace = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/"
-                    +"div/div/div[3]/dialog-tags-select/dialog-tag/dm-dialog/div/div/div/div[2]/div/div"));
-            newTagSpace.click();
-            log.info("___________________ newTagSpace - OK");
+            try {
+                WebElement newTagSpace = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/"
+                        + "div/div/div[3]/dialog-tags-select/dialog-tag/dm-dialog/div/div/div/div[2]/div/div"));
+                newTagSpace.click();
+            } catch (Exception e) {
+                log.error("Element newTagSpace not found!");
+            }
 
-            WebElement setColorTag = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/"
-                    +"div/div/div[3]/dialog-tags-select/dialog-tag/dm-dialog/div/div/div/div[2]/div/div/div/"
-                    +"div[2]/div[1]/div/div"));
-            setColorTag.click();
-            log.info("___________________ setColor - OK");
+            try {
+                WebElement setColorTag = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/"
+                        + "div/div/div[3]/dialog-tags-select/dialog-tag/dm-dialog/div/div/div/div[2]/div/div/div/"
+                        + "div[2]/div[1]/div/div"));
+                setColorTag.click();
+            } catch (Exception e) {
+                log.error("Element setColorTag not found!");
+            }
 
-            WebElement yellowColor = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/"
-                    +"div/div/div[3]/dialog-tags-select/dialog-tag/dm-dialog/div/div/div/div[2]/div/div/div/div[3]/"
-                    +"div/div[80]"));
-            yellowColor.click();
-            log.info("___________________ yellowColor - OK");
+            try {
+                WebElement yellowColor = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/"
+                        + "div/div/div[3]/dialog-tags-select/dialog-tag/dm-dialog/div/div/div/div[2]/div/div/div/div[3]/"
+                        + "div/div[80]"));
+                yellowColor.click();
+            } catch (Exception e) {
+                log.error("Element yellowColor not found!");
+            }
 
-            WebElement addIconButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
-                    +"ng-component/div/div/div[3]/dialog-tags-select/dialog-tag/dm-dialog/div/div/div/div[2]"
-                    +"/div/div/div/div[2]/div[2]/div/button"));
-            addIconButton.click();
-            log.info("___________________ addIconButton - OK");
+            try {
+                WebElement addIconButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                        + "ng-component/div/div/div[3]/dialog-tags-select/dialog-tag/dm-dialog/div/div/div/div[2]"
+                        + "/div/div/div/div[2]/div[2]/div/button"));
+                addIconButton.click();
+            } catch (Exception e) {
+                log.error("Element addIconButton not found!");
+            }
 
-            WebElement newIcon = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/"
-                    +"div/div/div[3]/dialog-tags-select/dialog-tag/dm-dialog/div/div/div/div[2]/div/div/div/div[3]/"
-                    +"div/div[35]/i"));
-            newIcon.click();
-            log.info("___________________ newIcon - OK");
+            try {
+                WebElement newIcon = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/"
+                        + "div/div/div[3]/dialog-tags-select/dialog-tag/dm-dialog/div/div/div/div[2]/div/div/div/div[3]/"
+                        + "div/div[35]/i"));
+                newIcon.click();
+            } catch (Exception e) {
+                log.error("Element newIcon not found!");
+            }
 
-            WebElement tagName = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/"
+            try {WebElement tagName = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/"
                     +"div/div/div[3]/dialog-tags-select/dialog-tag/dm-dialog/div/div/div/div[2]/div/div/div/div[2]/"
                     +"div[3]/div/input"));
             tagName.sendKeys("autoTestTag_" + n + "_(" + cTime + ")");
+            } catch (Exception e) {
+                log.error("Element tagName not found!");
+            }
 
-            WebElement addTagApplyButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
-                    +"ng-component/div/div/div[3]/dialog-tags-select/dialog-tag/dm-dialog/div/div/div/div[3]/"
-                    +"div/div[1]/button"));
-            addTagApplyButton.click();
-            log.info("___________________ addTagApplyButton - OK");
+            try {
+                WebElement addTagApplyButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                        + "ng-component/div/div/div[3]/dialog-tags-select/dialog-tag/dm-dialog/div/div/div/div[3]/"
+                        + "div/div[1]/button"));
+                addTagApplyButton.click();
+            } catch (Exception e) {
+                log.error("Element addTagApplyButton not found!");
+            }
 
-            WebElement selectTag = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/"
-                    +"div/div/div[3]/dialog-tags-select/dm-dialog/div/div/div/div[2]/div/div/div[2]/"
-                    +"tree-view/div[3]/div[2]/md-checkbox"));
-            selectTag.click();
-            log.info("___________________ selectTag - OK");
+            try {
+                WebElement selectTag = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/"
+                        + "div/div/div[3]/dialog-tags-select/dm-dialog/div/div/div/div[2]/div/div/div[2]/"
+                        + "tree-view/div[3]/div[2]/md-checkbox"));
+                selectTag.click();
+            } catch (Exception e) {
+                log.error("Element selectTag");
+            }
 
-            WebElement newTagApplyButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
-                    +"ng-component/div/div/div[3]/dialog-tags-select/dm-dialog/div/div/div/div[3]/div/div[1]/button"));
-            newTagApplyButton.click();
-            log.info("___________________ newTagApplyButton - OK");
+            try {
+                WebElement newTagApplyButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                        + "ng-component/div/div/div[3]/dialog-tags-select/dm-dialog/div/div/div/div[3]/div/div[1]/button"));
+                newTagApplyButton.click();
+            } catch (Exception e) {
+                log.error("Element newTagApplyButton not found!");
+            }
             //------------------------------------- STOP ADD TAGS---------------------------------------------------
 
             //------------------------------------- ADD NEW  RUN PARAMETERS ----------------------------------------
