@@ -80,37 +80,53 @@ public class CreateAndRunSuiteTest {
 
         //================================== CREATE SUITE ====================================================
 
-        WebElement loginField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
-                +"/div/ng-component/div/div/form/div[1]/div/input"));
-        if(login != null && !login.isEmpty()) {
-            loginField.sendKeys(login);
+        try {
+            WebElement loginField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
+                    + "/div/ng-component/div/div/form/div[1]/div/input"));
+            if (login != null && !login.isEmpty()) {
+                loginField.sendKeys(login);
+            }
+        } catch (Exception e) {
+            log.error("Element loginField not found!");
         }
-        log.info("___________________ login - OK");
 
-        WebElement passwordField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
-                +"/div/ng-component/div/div/form/div[2]/div/input"));
-        if(password != null && !password.isEmpty()) {
-            passwordField.sendKeys(password);
+        try {
+            WebElement passwordField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
+                    + "/div/ng-component/div/div/form/div[2]/div/input"));
+            if (password != null && !password.isEmpty()) {
+                passwordField.sendKeys(password);
+            }
+        } catch (Exception e) {
+            log.error("Element passwordField not found!");
         }
-        log.info("___________________ password - OK");
 
-        WebElement loginButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
-                +"/div/ng-component/div/div/form/div[3]/div/button"));
-        loginButton.click();
-        log.info("___________________ loginButton - OK");
+        try {
+            WebElement loginButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
+                    + "/div/ng-component/div/div/form/div[3]/div/button"));
+            loginButton.click();
+        } catch (Exception e) {
+            log.error("Element loginButton not found!");
+        }
         milliSleep(delayMilliSec);
 
-        WebElement mainPage = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));
-        WebElement suiteButton = driver.findElement(By.xpath("/html/body/app-root/div/div[1]"
-                + "/div[2]/div/div[1]/div[3]/span"));
+        WebElement mainPage;
+        WebElement suiteButton;
 
         for(int n = 0; n < numberSuites; n++) {
+            try {
+                mainPage = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));
+                mainPage.click();
+            } catch (Exception e) {
+                log.error("Element mainPage not found!");
+            }
 
-            mainPage.click();
-            log.info("___________________ mainPage - OK");
-
-            suiteButton.click();
-            log.info("___________________ suiteButton - OK");
+            try {
+                suiteButton = driver.findElement(By.xpath("/html/body/app-root/div/div[1]"
+                        + "/div[2]/div/div[1]/div[3]/span"));
+                suiteButton.click();
+            } catch (Exception e) {
+                log.error("Element suiteButton not found!");
+            }
 
             WebElement createSuiteButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
                     + "/ng-component/div/div/div/div/list-view-toolbar-share/list-view-toolbar-complex/"
@@ -161,6 +177,8 @@ public class CreateAndRunSuiteTest {
                 driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));  //   mainPage
                 log.info("___________________ mainPage_2 - OK");
 
+                suiteButton = driver.findElement(By.xpath("/html/body/app-root/div/div[1]"
+                        + "/div[2]/div/div[1]/div[3]/span"));
                 suiteButton.click();
                 log.info("___________________ suiteButton_2 - OK");
 
