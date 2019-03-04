@@ -78,75 +78,120 @@ public class CreateDeleteAssertionsTest {
 
         //================================== CREATE ASSERTION ====================================================
 
-        WebElement loginField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
-                +"/div/ng-component/div/div/form/div[1]/div/input"));
-        if(login != null && !login.isEmpty()) {
-            loginField.sendKeys(login);
+        try {
+            WebElement loginField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
+                    + "/div/ng-component/div/div/form/div[1]/div/input"));
+            if (login != null && !login.isEmpty()) {
+                loginField.sendKeys(login);
+            }
+        } catch (Exception e) {
+            log.error("Element loginField not found!");
         }
-        log.info("___________________ login - OK");
 
-        WebElement passwordField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
-                +"/div/ng-component/div/div/form/div[2]/div/input"));
-        if(password != null && !password.isEmpty()) {
-            passwordField.sendKeys(password);
+        try {
+            WebElement passwordField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
+                    + "/div/ng-component/div/div/form/div[2]/div/input"));
+            if (password != null && !password.isEmpty()) {
+                passwordField.sendKeys(password);
+            }
+        } catch (Exception e) {
+            log.error("Element passwordField not found!");
         }
-        log.info("___________________ password - OK");
 
-        WebElement loginButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
-                +"/div/ng-component/div/div/form/div[3]/div/button"));
-        loginButton.click();
-        log.info("___________________ loginButton - OK");
+        try {
+            WebElement loginButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
+                    + "/div/ng-component/div/div/form/div[3]/div/button"));
+            loginButton.click();
+        } catch (Exception e) {
+            log.error("Element loginButton not found!");
+        }
+
         milliSleep(delayMilliSec);
 
-        WebElement mainPage = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));
-        WebElement libraryButton = driver.findElement(By.xpath("/html/body/app-root/div/div[1]/div[2]"
-                +"/div/div[1]/div[5]/span"));
+        WebElement mainPage;
+        try {
+            mainPage = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));
+        } catch (Exception e) {
+            log.error("Element mainPage not found!");
+        }
+
+        WebElement libraryButton;
+        try {
+            libraryButton = driver.findElement(By.xpath("/html/body/app-root/div/div[1]/div[2]"
+                    + "/div/div[1]/div[5]/span"));
+        } catch (Exception e) {
+            log.error("Element libraryButton not found!");
+        }
 
         WebElement assertionsButton = null;
 
         for(int n = 0; n < numberConditions; n++) {
-
-            mainPage.click();
-            log.info("___________________ mainPage - OK");
-
-            libraryButton.click();
-            log.info("___________________ libraryButton - OK");
-
-            assertionsButton = driver.findElement(By.xpath("/html/body/app-root/div/div[1]/div[2]"
-                    +"/div[2]/div[3]/span"));
-            assertionsButton.click();
-            assertionsButton.click();
-            log.info("___________________ assertionButton - OK");
-
-            WebElement createAssertionButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
-                    +"/ng-component/div/ng-component/div/div/list-view-toolbar-share/"
-                    +"list-view-toolbar-complex/list-view-toolbar/div/div/div[4]/button/span"));
-            createAssertionButton.click();
-
-            WebElement createNameConditionButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
-                    +"/div[2]/ng-component/div/ng-component/dialog-condition/dm-dialog/div/div/div/div[2]"
-                    +"/div/div/div[1]/div/input"));
-            String nameCondition = new String();
-            nameCondition = "autoTestCondition_" + n + "_(" + cTime + ")";
-            if (nameCondition != null && !nameCondition.isEmpty()) {
-                createNameConditionButton.sendKeys(nameCondition);
+            try {
+                mainPage = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));
+                mainPage.click();
+            } catch (Exception e) {
+                log.error("Element mainPage not found!");
             }
-            log.info("___________________ nameCondition - OK");
 
-            WebElement expressionWindow = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
-                    +"ng-component/div/ng-component/dialog-condition/dm-dialog/div/div/div/div[2]/div/div/div[2]/"
-                    +"div[2]/codemirror/div/div[6]/div[1]/div/div/div/div[5]/div/pre"));
-            expressionWindow.click();
-            log.info("___________________ expressionWindow - OK");
+            try {
+                libraryButton = driver.findElement(By.xpath("/html/body/app-root/div/div[1]/div[2]"
+                        + "/div/div[1]/div[5]/span"));
+                libraryButton.click();
+            } catch (Exception e) {
+                log.error("Element libraryButton not found!");
+            }
 
-            WebElement expressionsField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
-                    +"ng-component/div/ng-component/dialog-condition/dm-dialog/div/div/div/div[2]/div/div/div[2]/"
-                    +"div[2]/codemirror/div/div[1]/textarea"));
-            String expression = "ANY load.actions.succeeds + load.actions.fails + load.actions.aborts "
-                    +"== load.actions.attempts";
-            milliSleep(delayMilliSec);
-            expressionsField.sendKeys(expression);
-            log.info("___________________ expressionsField - OK");
+            try {
+                assertionsButton = driver.findElement(By.xpath("/html/body/app-root/div/div[1]/div[2]"
+                        + "/div[2]/div[3]/span"));
+                assertionsButton.click();
+                assertionsButton.click();
+            } catch (Exception e) {
+                log.error("Element assertionsButton not found!");
+            }
+
+            try {
+                WebElement createAssertionButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
+                        + "/ng-component/div/ng-component/div/div/list-view-toolbar-share/"
+                        + "list-view-toolbar-complex/list-view-toolbar/div/div/div[4]/button/span"));
+                createAssertionButton.click();
+            } catch (Exception e) {
+                log.error("Element CreateAssertionButton not found!");
+            }
+
+            String nameCondition = "";
+            try {
+                WebElement createNameConditionButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
+                        + "/div[2]/ng-component/div/ng-component/dialog-condition/dm-dialog/div/div/div/div[2]"
+                        + "/div/div/div[1]/div/input"));
+                nameCondition = "autoTestCondition_" + n + "_(" + cTime + ")";
+                if (nameCondition != null && !nameCondition.isEmpty()) {
+                    createNameConditionButton.sendKeys(nameCondition);
+                }
+            } catch (Exception e) {
+                log.error("Element createNameConditionButton not found!");
+            }
+
+            try {
+                WebElement expressionWindow = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                        + "ng-component/div/ng-component/dialog-condition/dm-dialog/div/div/div/div[2]/div/div/div[2]/"
+                        + "div[2]/codemirror/div/div[6]/div[1]/div/div/div/div[5]/div/pre"));
+                expressionWindow.click();
+            } catch (Exception e) {
+                log.error("Element expressionWindow not found!");
+            }
+
+            try {
+                WebElement expressionsField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
+                        + "ng-component/div/ng-component/dialog-condition/dm-dialog/div/div/div/div[2]/div/div/div[2]/"
+                        + "div[2]/codemirror/div/div[1]/textarea"));
+                String expression = "ANY load.actions.succeeds + load.actions.fails + load.actions.aborts "
+                        + "== load.actions.attempts";
+                milliSleep(delayMilliSec);
+                expressionsField.sendKeys(expression);
+            } catch (Exception e) {
+                log.error("Element expressionsField not found!");
+            }
 
             WebElement showSyntaxHelpButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
                     +"/ng-component/div/ng-component/dialog-condition/dm-dialog/div/div/div/div[2]/div/div/div[2]"
@@ -198,6 +243,8 @@ public class CreateDeleteAssertionsTest {
                 driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));  //   mainPage
                 log.info("___________________ mainPage_2 - OK");
 
+                libraryButton = driver.findElement(By.xpath("/html/body/app-root/div/div[1]/div[2]"
+                        + "/div/div[1]/div[5]/span"));
                 libraryButton.click();
                 log.info("___________________ libraryButton_2 - OK");
 
