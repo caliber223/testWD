@@ -193,29 +193,41 @@ public class CreateDeleteAssertionsTest {
                 log.error("Element expressionsField not found!");
             }
 
-            WebElement showSyntaxHelpButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
-                    +"/ng-component/div/ng-component/dialog-condition/dm-dialog/div/div/div/div[2]/div/div/div[2]"
-                    +"/div[1]/md-checkbox[1]/div[1]"));
-            showSyntaxHelpButton.click();
-            log.info("___________________ showSyntaxHelpButton - OK");
+            try {
+                WebElement showSyntaxHelpButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
+                        + "/ng-component/div/ng-component/dialog-condition/dm-dialog/div/div/div/div[2]/div/div/div[2]"
+                        + "/div[1]/md-checkbox[1]/div[1]"));
+                showSyntaxHelpButton.click();
+            } catch (Exception e) {
+                log.error("Element showSyntaxHelpButton not found!");
+            }
 
-            WebElement showSyntaxHelp2Button = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
-                    +"/ng-component/div/ng-component/dialog-condition/dm-dialog/div/div/div/div[2]/div/div/div[2]"
-                    +"/div[1]/md-checkbox[1]/div[1]"));
-            showSyntaxHelp2Button.click();
-            log.info("___________________ showSyntaxHelpButton - OK");
+            try {
+                WebElement showSyntaxHelp2Button = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
+                        + "/ng-component/div/ng-component/dialog-condition/dm-dialog/div/div/div/div[2]/div/div/div[2]"
+                        + "/div[1]/md-checkbox[1]/div[1]"));
+                showSyntaxHelp2Button.click();
+            } catch (Exception e) {
+                log.error("Element showSyntaxHelpButton not found!");
+            }
 
-            WebElement lineWrappingButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
-                    +"/ng-component/div/ng-component/dialog-condition/dm-dialog/div/div/div/div[2]/div/div/div[2]"
-                    +"/div[1]/md-checkbox[2]/div[1]"));
-            lineWrappingButton.click();
-            log.info("___________________ lineWrappingButton - OK");
+            try {
+                WebElement lineWrappingButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
+                        + "/ng-component/div/ng-component/dialog-condition/dm-dialog/div/div/div/div[2]/div/div/div[2]"
+                        + "/div[1]/md-checkbox[2]/div[1]"));
+                lineWrappingButton.click();
+            } catch (Exception e) {
+                log.error("Element lineWrappingButton not found!");
+            }
 
-            WebElement lineWrapping2Button = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
-                    +"/ng-component/div/ng-component/dialog-condition/dm-dialog/div/div/div/div[2]/div/div/div[2]"
-                    +"/div[1]/md-checkbox[2]/div[1]"));
-            lineWrapping2Button.click();
-            log.info("___________________ lineWrapping2Button - OK");
+            try {
+                WebElement lineWrapping2Button = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
+                        + "/ng-component/div/ng-component/dialog-condition/dm-dialog/div/div/div/div[2]/div/div/div[2]"
+                        + "/div[1]/md-checkbox[2]/div[1]"));
+                lineWrapping2Button.click();
+            } catch (Exception e) {
+                log.error("Element lineWrapping2Button not found!");
+            }
 
             WebElement lineNumbersButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
                     +"/ng-component/div/ng-component/dialog-condition/dm-dialog/div/div/div/div[2]/div/div/div[2]"

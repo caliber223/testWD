@@ -16,10 +16,10 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 import org.apache.log4j.Logger;
 
-public class CreateAndRunSuiteTest {
+public class NewServicesTest {
 
     private static WebDriver driver;
-    private static final Logger log = Logger.getLogger(CreateAndRunSuiteTest.class);
+    private static final Logger log = Logger.getLogger(NewServicesTest.class);
     private static Vector<String> suiteNameList = new Vector();
     final private long delayMilliSec = 200;
     final private long delaySec = 1;
@@ -189,42 +189,7 @@ public class CreateAndRunSuiteTest {
             mSleep(2);
         }
 
-        log.info("============================ RUN SUITES ==========================");
-        //================================== RUN CREATED SUITES =========================================
-        if(suiteNameList.size() > 0) {
-            for(int i = 0; i < suiteNameList.size(); i++) {
-                try {
-                    driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));  //   mainPage
-                } catch (Exception e) {
-                    log.error("Element mainPage not found!");
-                }
 
-                try {
-                    suiteButton = driver.findElement(By.xpath("/html/body/app-root/div/div[1]"
-                            + "/div[2]/div/div[1]/div[3]/span"));
-                    suiteButton.click();
-                } catch (Exception e) {
-                    log.error("Element suiteButton not found!");
-                }
-
-                try {
-                    WebElement desiredSuite = driver.findElement(By.linkText(suiteNameList.get(i)));
-                    desiredSuite.click();
-                } catch (Exception e) {
-                    log.error("Element desiredSuite not found!");
-                }
-
-                try {
-                    WebElement saveAndRunSuiteButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
-                            + "/ng-component/div/div/div[3]/div/div/div[2]/div/button[3]"));
-                    saveAndRunSuiteButton.click();
-                    log.info("Suite [" + suiteNameList.get(i) + "] running was successful");
-                } catch (Exception e) {
-                    log.error("Element saveAndRunSuiteButton not found!");
-                }
-            }
-        }
-        //==================================================================================================
 
     }
  /*   @AfterClass
@@ -248,5 +213,6 @@ public class CreateAndRunSuiteTest {
         driver.quit();
     }*/
 }
+
 
 
