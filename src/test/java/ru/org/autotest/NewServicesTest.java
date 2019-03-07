@@ -20,7 +20,7 @@ public class NewServicesTest {
 
     private static WebDriver driver;
     private static final Logger log = Logger.getLogger(NewServicesTest.class);
-    private static Vector<String> suiteNameList = new Vector();
+    private static Vector<String> pageNameList = new Vector();
     final private long delayMilliSec = 200;
     final private long delaySec = 1;
     private static ArrayList<String> auth = new ArrayList<>();
@@ -69,16 +69,14 @@ public class NewServicesTest {
 
     @Test
     public void userLogin() {
-        log.info("\n\n============================ CREATE SUITES ==========================");
-        int numberSuites = 1;   //-------------------- !!!!!!!!--------------------
-
+        log.info("\n\n====================================== TEST START =====================================");
+        int numberPage = 1;   //-------------------- !!!!!!!!--------------------
 
         Date currentTime = new Date();
         String cTime = currentTime.toString();
         String login = auth.get(1);
         String password = auth.get(2);
 
-        //================================== CREATE SUITE ====================================================
 
         try {
             WebElement loginField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]"
@@ -107,89 +105,121 @@ public class NewServicesTest {
         } catch (Exception e) {
             log.error("Element loginButton not found!");
         }
+        log.info("Authorization was successful");
+
         milliSleep(delayMilliSec);
 
-        WebElement mainPage;
-        WebElement suiteButton;
+        WebElement mainPage = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));
 
-        for(int n = 0; n < numberSuites; n++) {
+        log.info("============================ CREATE NEW OBJECTS ==========================");
+        for(int n = 0; n < numberPage; n++) {
             try {
-                mainPage = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));
+             //   mainPage = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));
                 mainPage.click();
             } catch (Exception e) {
                 log.error("Element mainPage not found!");
             }
 
+            //---------------------------- ADD NEW PAGE -----------------------------------------
             try {
-                suiteButton = driver.findElement(By.xpath("/html/body/app-root/div/div[1]"
-                        + "/div[2]/div/div[1]/div[3]/span"));
-                suiteButton.click();
+                WebElement newDashboardPage = driver.findElement(By.xpath("/html/body/app-root/div/div[1]/div[2]/div[2]/div[3]/span"));
+                newDashboardPage.click();
             } catch (Exception e) {
-                log.error("Element suiteButton not found!");
+                log.error("Element newDashboardPage not found");
             }
 
             try {
-                WebElement createSuiteButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
-                        + "/ng-component/div/div/div/div/list-view-toolbar-share/list-view-toolbar-complex/"
-                        + "list-view-toolbar/div/div/div[4]/button/span"));
-                createSuiteButton.click();
+                WebElement addPageButton = driver.findElement(By.xpath("/html/body/app-root/div/div[1]/div[2]/div[2]/div[2]/span"));
+                addPageButton.click();
             } catch (Exception e) {
-                log.error("Element createSuiteButton not found!");
+                log.error("Element addPageButton not found!");
             }
 
-            String nameSuite = "";
             try {
-                WebElement createNameSuiteButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
-                        + "ng-component/div/div/div[3]/div/div/div[1]/div[1]/div[1]/div/input"));
-                nameSuite = "autoTestSuite_" + n + "_(" + cTime + ")";
-                if (nameSuite != null && !nameSuite.isEmpty()) {
-                    createNameSuiteButton.sendKeys(nameSuite);
+                WebElement editPageButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/div/div/div[1]/div/i"));
+                editPageButton.click();
+            } catch (Exception e) {
+                log.error("Element editPageButton not found!");
+            }
+
+            String nameDashboardPage = "";
+            try {
+                WebElement namePageField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/div/div/div[1]/input"));
+                nameDashboardPage = "autoTestDasboardPage_" + n + "_(" + cTime + ")";
+                if (nameDashboardPage != null && !nameDashboardPage.isEmpty()) {
+                    namePageField.clear();
+                    namePageField.sendKeys(nameDashboardPage);
                 }
             } catch (Exception e) {
-                log.error("Element createNameSuiteButton not found!");
+                log.error("Element namePageField not found!");
             }
 
             try {
-                WebElement projectListButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/"
-                        + "ng-component/div/div/div[3]/div/div/div[1]/div[2]/div[2]/div"));
-                projectListButton.click();
+                WebElement selectIconButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/div/div/"
+                        +"div[1]/div[1]/i"));
+                selectIconButton.click();
             } catch (Exception e) {
-                log.error("Element projectListButton not found!");
+                log.error("Element selectIconButton not found!");
             }
 
             try {
-                WebElement projectSelectButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
-                        + "/ng-component/div/div/div[3]/dialog-select-projects/dm-dialog/div/div/div/div[2]"
-                        + "/div/div/div/div/list-view/atr-project[15]/div/md-checkbox/div[1]"));
-                projectSelectButton.click();
+                WebElement iconList = driver.findElement(By.xpath("/html/body/app-root/div[3]/div/div[2]"));
             } catch (Exception e) {
-                log.error("Element projectSelectButton not found!");
+                log.error("Element iconList not found!");
             }
 
             try {
-                WebElement projectSelectApplyButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
-                        + "/ng-component/div/div/div[3]/dialog-select-projects/dm-dialog/div/div/div/div[3]"
-                        + "/div/div[1]/button"));
-                projectSelectApplyButton.click();
+                WebElement selectedIcon = driver.findElement(By.xpath("/html/body/app-root/div[3]/div/div[2]/div/div[26]/i"));
+                selectedIcon.click();
             } catch (Exception e) {
-                log.error("Element projectSelectApplyButton not found!");
+                log.error("Element selectedIcon not found!");
             }
 
             try {
-                WebElement saveNewSuiteButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]"
-                        + "/ng-component/div/div/div[3]/div/div/div[2]/div/button[1]"));
-                saveNewSuiteButton.click();
+                WebElement selectColorButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/"
+                        +"div/div/div[1]/div[2]"));
+                selectColorButton.click();
             } catch (Exception e) {
-                log.error("Element saveNewSuiteButton not found!");
+                log.error("Element selectColorButton not found!");
             }
 
-            suiteNameList.add(nameSuite);
-            log.info("Suite [" + nameSuite + "] creation was successful");
+            try {
+                WebElement colorList = driver.findElement(By.xpath("/html/body/app-root/div[3]/div/div[2]"));
+            } catch (Exception e) {
+                log.error("Element colorList not found!");
+            }
 
+            try {
+                WebElement selectedColor = driver.findElement(By.xpath("/html/body/app-root/div[3]/div/div[2]/div/div[28]"));
+                selectedColor.click();
+            } catch (Exception e) {
+                log.error("Element selectedColor not found!");
+            }
+
+
+
+
+            try {
+                WebElement savePageButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/"
+                        +"div/div/div[1]/div[3]/button[1]"));
+                savePageButton.click();
+            } catch (Exception e) {
+                log.error("Element savePageButton not found!");
+            }
+
+            pageNameList.add(nameDashboardPage);
+            log.info("Page creation was successful");
             mSleep(2);
         }
 
-
+        //------------------------------------- DELETE NEW PAGE -------------------------------------------
+        for (int d = 0; d < numberPage; ++d) {
+            try {
+                mainPage.click();
+            } catch (Exception e) {
+                log.error("Element mainPage not found!");
+            }
+        }
 
     }
  /*   @AfterClass
