@@ -69,7 +69,10 @@ public class NewServicesTest {
 
     @Test
     public void userLogin() {
-        log.info("\n\n====================================== TEST START =====================================");
+        boolean testState = true;
+        log.info("\n");
+        log.info("________________________________________________________________________________________");
+        log.info("======================================= TEST START =====================================");
         int numberPage = 1;   //-------------------- !!!!!!!!--------------------
 
         Date currentTime = new Date();
@@ -85,6 +88,7 @@ public class NewServicesTest {
                 loginField.sendKeys(login);
             }
         } catch (Exception e) {
+            testState = false;
             log.error("Element loginField not found!");
         }
 
@@ -95,6 +99,7 @@ public class NewServicesTest {
                 passwordField.sendKeys(password);
             }
         } catch (Exception e) {
+            testState = false;
             log.error("Element passwordField not found!");
         }
 
@@ -103,6 +108,7 @@ public class NewServicesTest {
                     + "/div/ng-component/div/div/form/div[3]/div/button"));
             loginButton.click();
         } catch (Exception e) {
+            testState = false;
             log.error("Element loginButton not found!");
         }
         log.info("Authorization was successful");
@@ -110,28 +116,35 @@ public class NewServicesTest {
         milliSleep(delayMilliSec);
 
         WebElement mainPage = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));
+        WebElement pages;
 
-        log.info("============================ CREATE NEW OBJECTS ==========================");
         for(int n = 0; n < numberPage; n++) {
             try {
              //   mainPage = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[1]/div"));
                 mainPage.click();
             } catch (Exception e) {
+                testState = false;
                 log.error("Element mainPage not found!");
             }
 
             //---------------------------- ADD NEW PAGE -----------------------------------------
             try {
-                WebElement newDashboardPage = driver.findElement(By.xpath("/html/body/app-root/div/div[1]/div[2]/div[2]/div[3]/span"));
-                newDashboardPage.click();
+                pages = driver.findElement(By.xpath("/html/body/app-root/div/div[1]/div[2]/div[2]"));
+                pages.click();
             } catch (Exception e) {
-                log.error("Element newDashboardPage not found");
+                testState = false;
+                log.error("Element pages not found!");
             }
 
             try {
-                WebElement addPageButton = driver.findElement(By.xpath("/html/body/app-root/div/div[1]/div[2]/div[2]/div[2]/span"));
+              //  WebElement addPageButton = driver.findElement(By.xpath("/html/body/app-root/div/div[1]/div[2]/div[2]/div[4]/span"));
+              //  driver.find_element_by_xpath("//div[contains(text(),'Add User')]");
+              //  driver.find_element_by_xpath("//button[contains(text(),'Add User')]");
+              //  driver.findElement(By.Xpath("//strong[contains(text(),'" + service +"')]"));
+                WebElement addPageButton = driver.findElement(By.xpath("//*[contains(text(), 'Add Page')]"));
                 addPageButton.click();
             } catch (Exception e) {
+                testState = false;
                 log.error("Element addPageButton not found!");
             }
 
@@ -139,18 +152,21 @@ public class NewServicesTest {
                 WebElement editPageButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/div/div/div[1]/div/i"));
                 editPageButton.click();
             } catch (Exception e) {
+                testState = false;
                 log.error("Element editPageButton not found!");
             }
 
             String nameDashboardPage = "";
+            WebElement namePageField;
             try {
-                WebElement namePageField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/div/div/div[1]/input"));
+                namePageField = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/div/div/div[1]/input"));
                 nameDashboardPage = "autoTestDasboardPage_" + n + "_(" + cTime + ")";
                 if (nameDashboardPage != null && !nameDashboardPage.isEmpty()) {
                     namePageField.clear();
                     namePageField.sendKeys(nameDashboardPage);
                 }
             } catch (Exception e) {
+                testState = false;
                 log.error("Element namePageField not found!");
             }
 
@@ -159,12 +175,15 @@ public class NewServicesTest {
                         +"div[1]/div[1]/i"));
                 selectIconButton.click();
             } catch (Exception e) {
+                testState = false;
                 log.error("Element selectIconButton not found!");
             }
 
             try {
                 WebElement iconList = driver.findElement(By.xpath("/html/body/app-root/div[3]/div/div[2]"));
+                milliSleep(200);
             } catch (Exception e) {
+                testState = false;
                 log.error("Element iconList not found!");
             }
 
@@ -172,20 +191,25 @@ public class NewServicesTest {
                 WebElement selectedIcon = driver.findElement(By.xpath("/html/body/app-root/div[3]/div/div[2]/div/div[26]/i"));
                 selectedIcon.click();
             } catch (Exception e) {
+                testState = false;
                 log.error("Element selectedIcon not found!");
             }
+            milliSleep(200);
 
             try {
                 WebElement selectColorButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/"
                         +"div/div/div[1]/div[2]"));
                 selectColorButton.click();
             } catch (Exception e) {
+                testState = false;
                 log.error("Element selectColorButton not found!");
             }
 
             try {
                 WebElement colorList = driver.findElement(By.xpath("/html/body/app-root/div[3]/div/div[2]"));
+                milliSleep(200);
             } catch (Exception e) {
+                testState = false;
                 log.error("Element colorList not found!");
             }
 
@@ -193,34 +217,143 @@ public class NewServicesTest {
                 WebElement selectedColor = driver.findElement(By.xpath("/html/body/app-root/div[3]/div/div[2]/div/div[28]"));
                 selectedColor.click();
             } catch (Exception e) {
+                testState = false;
                 log.error("Element selectedColor not found!");
             }
 
+            WebElement addNewWidgetButton;
+            try {
+                addNewWidgetButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/"
+                        +"div/div/div[1]/button[1]"));
+                addNewWidgetButton.click();
+            } catch (Exception e) {
+                testState = false;
+                log.error("Element addNewWidgetButton not found!");
+            }
+
+            try {
+                WebElement commonStats = driver.findElement(By.xpath("/html/body/app-root/div[3]/div/div[2]/div/div[1]"));
+                commonStats.click();
+            } catch (Exception e) {
+                testState = false;
+                log.error("Element commonStats not found!");
+            }
+            mSleep(1);
+
+            try {
+                addNewWidgetButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/"
+                        +"div/div/div[1]/button[1]"));
+                addNewWidgetButton.click();
+            } catch (Exception e) {
+                testState = false;
+                log.error("Element addNewWidgetButton not found!");
+            }
+
+            try {
+                WebElement systemStats = driver.findElement(By.xpath("/html/body/app-root/div[3]/div/div[2]/div/div[2]"));
+                systemStats.click();
+            } catch (Exception e) {
+                testState = false;
+                log.error("Element systemStats not found!");
+            }
+            mSleep(1);
+
+            //---------------------------- Add appliance -------------------------------------------------------------
+
+           /* try {
+                addNewWidgetButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/"
+                        +"div/div/div[1]/button[1]"));
+                addNewWidgetButton.click();
+            } catch (Exception e) {
+                testState = false;
+                log.error("Element addNewWidgetButton not found!");
+            }*/
 
 
+
+
+
+
+
+            //---------------------------------------- Save All -----------------------------------------------------------
 
             try {
                 WebElement savePageButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/"
                         +"div/div/div[1]/div[3]/button[1]"));
                 savePageButton.click();
             } catch (Exception e) {
+                testState = false;
                 log.error("Element savePageButton not found!");
             }
 
             pageNameList.add(nameDashboardPage);
             log.info("Page creation was successful");
-            mSleep(2);
+            mSleep(1);
         }
+        mSleep(2);
 
         //------------------------------------- DELETE NEW PAGE -------------------------------------------
-        for (int d = 0; d < numberPage; ++d) {
+        for (int d = 0; d < pageNameList.size(); ++d) {
             try {
                 mainPage.click();
             } catch (Exception e) {
+                testState = false;
                 log.error("Element mainPage not found!");
             }
+
+            try {
+                pages = driver.findElement(By.xpath("/html/body/app-root/div/div[1]/div[2]/div[2]"));
+                pages.click();
+            } catch (Exception e) {
+                testState = false;
+                log.error("Element pages not found!");
+            }
+
+          //  WebElement onePage;
+            try {
+                WebElement onePage = driver.findElement(By.xpath("//span[contains(text(),'" + pageNameList.get(d) +"')]"));
+                onePage.click();
+            } catch (Exception e) {
+                testState = false;
+                log.error("Element onePage for delete not found!");
+                continue;
+            }
+
+            try {
+                WebElement editButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/div/div/div[1]/div/i"));
+                editButton.click();
+            } catch (Exception e) {
+                testState = false;
+                log.error("Element editButton (delete) not found!");
+            }
+
+            try {
+                WebElement deleteButton = driver.findElement(By.xpath("/html/body/app-root/div/div[2]/div[2]/ng-component/div/div/div[1]/button[2]"));
+                deleteButton.click();
+            } catch (Exception e) {
+                testState = false;
+                log.error("Element deleteButton ");
+            }
+
+            try {
+                WebElement deleteButtonApply = driver.findElement(By.xpath("/html/body/app-root/dialogs-list/div/div/content-dialog/div/"
+                        +"div[1]/div/div[3]/button"));
+                milliSleep(200);
+                deleteButtonApply.click();
+                log.info("Dashboard page " + pageNameList.get(d) + " has been deleted successfully!");
+            } catch (Exception e) {
+                testState = false;
+                log.error("Element deleteButtonApply not found!");
+            }
+
         }
 
+        if(testState) {
+            log.info("Test passed");
+        } else {
+            log.info("Test failed");
+        }
+        log.info("===================================== END OF TEST =====================================");
     }
  /*   @AfterClass
     public static void tearDown() {
